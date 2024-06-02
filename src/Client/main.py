@@ -2,11 +2,12 @@ import pygame as pg
 import moderngl as mgl
 import sys
 
-
+#inicializar pygame
+pg.init()
+pg.mixer.init()
+sound = pg.mixer.Sound('a.wav')
 class GraphicEngine:
     def __init__(self, win_size=(600, 300)):
-        pg.init()
-
         self.WIN_SIZE = win_size
         # set opengl attribute
         pg.display.gl_get_attribute(pg.GL_CONTEXT_MAJOR_VERSION)
@@ -23,6 +24,12 @@ class GraphicEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.type == pg.K_ESCAPE):
                 pg.quit()
                 sys.exit()
+            pulsada = pg.key.get_pressed()
+            if pulsada[pg.K_a]:
+                if pg.mixer.Channel(0).get_busy() == False:
+                    sound.play()
+            else:
+                sound.fadeout(1000)
 
     def render(self):
         # clear framebuffer
