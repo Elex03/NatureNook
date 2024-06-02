@@ -9,14 +9,17 @@
   </tr>
 </table>
 
-
-## Installation
-
-Install my-project with pip
-
 ## Features
 
 - Use 3D models.
 - Sound and visual atmosphere.
 - Fullscreen mode.
-- lighting and boxes.
+- lighting, textures and skyboxes.
+
+
+## Installation of dependencies
+
+Install our-project with pip coomand
+```bash
+    pip install pygame moderngl numpy
+```
