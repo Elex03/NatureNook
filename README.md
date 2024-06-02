@@ -12,7 +12,10 @@ Install my-project with pip
 ```bash
   pip install pygame
 ```
-    
+
+```bash
+  pip install moderngl
+``` 
 ## Features
 
 - Use 3D models.
