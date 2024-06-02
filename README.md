@@ -1,4 +1,4 @@
-# WITF - Walking in the forest
+# NatureNook 
 
 Our goal is to provide the user with the greatest experience possible.
 
