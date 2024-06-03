@@ -19,7 +19,7 @@
 
 ## Installation of dependencies
 
-Install our-project with pip coomand
+Install our-project with pip command
 ```bash
     pip install pygame moderngl numpy
 ```
