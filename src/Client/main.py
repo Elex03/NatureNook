@@ -5,7 +5,7 @@ import sys
 #inicializar pygame
 pg.init()
 pg.mixer.init()
-sound = pg.mixer.Sound('a.wav')
+sound = pg.mixer.Sound('Resources/a.wav')
 class GraphicEngine:
     def __init__(self, win_size=(600, 300)):
         self.WIN_SIZE = win_size
