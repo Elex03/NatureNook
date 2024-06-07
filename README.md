@@ -1,22 +1,25 @@
 # NatureNook 
 
-Our goal is to provide the user with the greatest experience possible.
+<table>
+  <tr>
+    <td> <img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpiha-IRIn6QqSvzxkwYR-ircnQ_I0ED-7lqHzlYJOLo8m5phYZTD95PI3opDCj5y6WA6VDwUej072CsPcnfTPl-bRciwMTia-cRw=w1868-h932"             alt="Logo" /></td>
+    <td>Our goal is to develop a unique virtual experience that transports the user to a tranquil 'NatureNook' in the heart of a lush forest, where they can escape the stress and   bustle of modern life and immerse themselves in the serenity and beauty of nature through animal sounds and an immersive atmosphere
+      </div>
+    </td>
+  </tr>
+</table>
 
-To carry out this project we decided to use Python thanks to its fast compression and easy handling.
-
-
-## Installation
-
-Install my-project with pip
-
-```bash
-  pip install pygame
-```
-    
 ## Features
 
 - Use 3D models.
 - Sound and visual atmosphere.
 - Fullscreen mode.
-- lighting and boxes.
+- lighting, textures and skyboxes.
 
+
+## Installation of dependencies
+
+Install our-project with pip command
+```bash
+    pip install pygame moderngl numpy
+```
