@@ -6,7 +6,7 @@ import pygame as pg
 FOV = 50  # deg
 NEAR = 0.1
 FAR = 100
-SPEED = 0.020
+SPEED = 0.010
 SENSITIVITY = 0.08
 
 
@@ -52,11 +52,13 @@ class Camera:
     def move(self):
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
-        distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
-        print(distance)
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
-            print(self.position)
-
+            distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
+            if distance < 20:
+                volume = round(distance) / 20
+                volume_normalized = abs(volume - 1)
+                self.app.sound_music.set_volume(volume_normalized)
+                print(self.app.sound_music.get_volume())
         if keys[pg.K_w]:
             z = self.position[2] + self.forward[2] * velocity
             x = self.position[0] + self.forward[0] * velocity

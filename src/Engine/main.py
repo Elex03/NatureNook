@@ -7,11 +7,10 @@ from light import Light
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
-import time
-
 
 pg.init()
 pg.mixer.init()
+
 sound = pg.mixer.Sound('resources/sounds/a.wav')
 
 
@@ -51,6 +50,8 @@ class GraphicsEngine:
         self.scene = Scene(self)
         # renderer
         self.scene_renderer = SceneRenderer(self)
+        # sound
+        self.sound_music = pg.mixer.Sound('resources/sounds/sound.mp3')
 
     def check_events(self):
         for event in pg.event.get():
@@ -67,15 +68,14 @@ class GraphicsEngine:
                 # scene
                 self.scene = Scene(self)
             pulsar = pg.key.get_pressed()
-            if pulsar[pg.K_a] or pulsar[pg.K_s] or  pulsar[pg.K_d] or pulsar[pg.K_w]:
+            if pulsar[pg.K_a] or pulsar[pg.K_s] or pulsar[pg.K_d] or pulsar[pg.K_w]:
                 if not pg.mixer.Channel(0).get_busy():
-                    sound.play()
+                    print(self.sound_music.get_volume())
             else:
                 sound.fadeout(500)
 
-
     def render(self):
-        # clear framebuffer
+        # clear frame buffer
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         # render scene
         self.scene_renderer.render()
@@ -96,4 +96,5 @@ class GraphicsEngine:
 
 if __name__ == '__main__':
     app = GraphicsEngine()
+    app.sound_music.play()
     app.run()
