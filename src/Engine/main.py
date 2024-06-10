@@ -12,7 +12,7 @@ import time
 
 pg.init()
 pg.mixer.init()
-sound = pg.mixer.Sound('resources/a.wav')
+sound = pg.mixer.Sound('resources/sounds/a.wav')
 
 
 class GraphicsEngine:

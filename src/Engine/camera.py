@@ -1,17 +1,17 @@
 import glm
 
-
+from math import sqrt
 import pygame as pg
 
 FOV = 50  # deg
 NEAR = 0.1
 FAR = 100
-SPEED = 0.030
+SPEED = 0.020
 SENSITIVITY = 0.08
 
 
 class Camera:
-    def __init__(self, app, position=(0, 0, 4), yaw=-90, pitch=0):
+    def __init__(self, app, position=(15, 2, 7), yaw=-90, pitch=0):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)
@@ -25,6 +25,7 @@ class Camera:
         # projection matrix
         self.m_proj = self.get_projection_matrix()
         self.Limits = glm.vec2(20, -20)
+        self.Pos_Radio = glm.vec3(15, 2, 7)
 
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
@@ -41,7 +42,6 @@ class Camera:
 
         self.forward = glm.normalize(self.forward)
         self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
-        self.up = glm.normalize(glm.cross(self.right, self.forward))
 
     def update(self):
         self.move()
@@ -52,8 +52,11 @@ class Camera:
     def move(self):
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
+        distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
+        print(distance)
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
             print(self.position)
+
         if keys[pg.K_w]:
             z = self.position[2] + self.forward[2] * velocity
             x = self.position[0] + self.forward[0] * velocity
@@ -78,10 +81,6 @@ class Camera:
             if self.Limits[0] > x > self.Limits[1] and self.Limits[0] > z > self.Limits[1]:
                 self.position[0] = x
                 self.position[2] = z
-        if keys[pg.K_q]:
-            self.position += self.up * velocity
-        if keys[pg.K_e]:
-            self.position -= self.up * velocity
 
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)
