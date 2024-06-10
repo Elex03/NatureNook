@@ -8,8 +8,8 @@ class Texture:
         self.app = app
         self.ctx = app.ctx
         self.textures = {}
-        self.textures[1] = self.get_texture(path='resources/textures/img.png')
-        self.textures[0] = self.get_texture(path='resources/textures/img_1.png')
+        self.textures[1] = self.get_texture(path='resources/textures/grand.jpg')
+        self.textures[0] = self.get_texture(path='resources/textures/grand.jpg')
 
 
         self.textures['skybox'] = self.get_texture_cube(dir_path='resources/textures/skybox1/', ext='png')

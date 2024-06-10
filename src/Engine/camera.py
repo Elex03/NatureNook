@@ -6,8 +6,8 @@ import pygame as pg
 FOV = 50  # deg
 NEAR = 0.1
 FAR = 100
-SPEED = 0.010
-SENSITIVITY = 0.04
+SPEED = 0.030
+SENSITIVITY = 0.08
 
 
 class Camera:
@@ -24,6 +24,7 @@ class Camera:
         self.m_view = self.get_view_matrix()
         # projection matrix
         self.m_proj = self.get_projection_matrix()
+        self.Limits = glm.vec2(20, -20)
 
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
@@ -51,16 +52,32 @@ class Camera:
     def move(self):
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
+        if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
+            print(self.position)
         if keys[pg.K_w]:
-            self.position[0] += self.forward[0] * velocity
-            self.position[2] += self.forward[2] * velocity
+            z = self.position[2] + self.forward[2] * velocity
+            x = self.position[0] + self.forward[0] * velocity
+            if self.Limits[0] > z > self.Limits[1] and self.Limits[0] > x > self.Limits[1]:
+                self.position[2] = z
+                self.position[0] = x
         if keys[pg.K_s]:
-            self.position[0] += self.forward[0] * velocity
-            self.position[2] += self.forward[2] * velocity
+            z = self.position[2] - self.forward[2] * velocity
+            x = self.position[0] - self.forward[0] * velocity
+            if self.Limits[1] < z < self.Limits[0] and self.Limits[1] < x < self.Limits[0]:
+                self.position[2] = z
+                self.position[0] = x
         if keys[pg.K_a]:
-            self.position -= self.right * velocity
+            x = self.position[0] - self.right[0] * velocity
+            z = self.position[2] - self.right[2] * velocity
+            if self.Limits[1] < x < self.Limits[0] and self.Limits[1] < z < self.Limits[0]:
+                self.position[0] = x
+                self.position[2] = z
         if keys[pg.K_d]:
-            self.position += self.right * velocity
+            x = self.position[0] + self.right[0] * velocity
+            z = self.position[2] + self.right[2] * velocity
+            if self.Limits[0] > x > self.Limits[1] and self.Limits[0] > z > self.Limits[1]:
+                self.position[0] = x
+                self.position[2] = z
         if keys[pg.K_q]:
             self.position += self.up * velocity
         if keys[pg.K_e]:
@@ -71,23 +88,3 @@ class Camera:
 
     def get_projection_matrix(self):
         return glm.perspective(glm.radians(FOV), self.aspect_ratio, NEAR, FAR)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
