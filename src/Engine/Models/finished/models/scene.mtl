@@ -1,0 +1,207 @@
+# Blender 4.1.1 MTL File: 'untitled.blend'
+# www.blender.org
+
+newmtl M_Pine_Branch
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd C:/M_Pine_Branch_baseColor.png
+map_d C:/M_Pine_Branch_baseColor.png
+map_Bump -bm 1.000000 C:/M_Pine_Branch_normal.png
+
+newmtl M_Pine_Branch.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd C:/M_Pine_Branch_baseColor.png
+map_d C:/M_Pine_Branch_baseColor.png
+map_Bump -bm 1.000000 C:/M_Pine_Branch_normal.png
+
+newmtl Material__247
+Ns 640.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__247_baseColor.png
+map_Bump -bm 0.410000 C:/Material__247_normal.png
+
+newmtl Material__250
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__250_baseColor.jpeg
+map_Bump -bm 1.000000 C:/Material__250_normal.png
+
+newmtl Material__251
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__251_baseColor.png
+map_Bump -bm 1.000000 C:/Material__251_normal.png
+
+newmtl Material__44
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__44_baseColor.png
+map_Bump -bm 0.280000 C:/Material__44_normal.png
+
+newmtl Material__45
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__45_baseColor.png
+map_Bump -bm 0.380000 C:/Material__45_normal.png
+
+newmtl Material__46
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__46_baseColor.png
+map_Bump -bm 1.000000 C:/Material__46_normal.png
+
+newmtl Material__48
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__48_baseColor.jpeg
+map_Bump -bm 1.000000 C:/Material__250_normal.png
+
+newmtl Material__49
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__49_baseColor.png
+map_Bump -bm 1.000000 C:/Material__49_normal.png
+
+newmtl Material__51
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material__51_baseColor.png
+map_Bump -bm 1.000000 C:/Material__51_normal.png
+
+newmtl bark
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+d 1.000000
+illum 2
+map_Kd C:/bark_diffuse.png
+map_Ns C:/bark_specularGlossiness.png
+map_Bump -bm 1.000000 C:/bark_normal.png
+
+newmtl lambert1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.048274 0.024929 0.015166
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Bump -bm 1.000000 C:/lambert1_normal.png
+
+newmtl lambert1.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.048274 0.024929 0.015166
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Bump -bm 1.000000 C:/lambert1_normal.png
+
+newmtl leaves
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1000.000000
+illum 2
+map_Kd C:/leaves_diffuse.png
+map_Ns C:/leaves_specularGlossiness.png
+map_d C:/leaves_diffuse.png
+map_Bump -bm 1.000000 C:/leaves_normal.png
+
+newmtl material0
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl material1
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl material2
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl raw2
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
