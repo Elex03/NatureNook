@@ -25,6 +25,5 @@ class Scene:
         self.moving_cube = MovingCube(app, pos=(0, 6, 8), scale=(3, 3, 3), tex_id=1)
         add(self.moving_cube)
 
-
     def update(self):
         self.moving_cube.rot.xyz = self.app.time

@@ -16,10 +16,12 @@ sound = pg.mixer.Sound('resources/sounds/a.wav')
 
 class GraphicsEngine:
     def __init__(self, win_size=(630, 480)):
-        # init pygame modules
-        pg.init()
         # window size
         self.WIN_SIZE = win_size
+        # skybox change state
+        self.scene_skybox = ('skybox2', 'skybox1')
+        # init pygame modules
+        pg.init()
         # set opengl attr
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
@@ -63,10 +65,16 @@ class GraphicsEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
                 # change state of the light
                 app.is_day = False if app.is_day else True
-                # light
+                # reload light
                 self.light = Light(self)
+                # reload mesh
+                self.mesh.update()
                 # scene
                 self.scene = Scene(self)
+                # renderer
+                self.scene_renderer = SceneRenderer(self)
+
+
             pulsar = pg.key.get_pressed()
             if pulsar[pg.K_a] or pulsar[pg.K_s] or pulsar[pg.K_d] or pulsar[pg.K_w]:
                 if not pg.mixer.Channel(0).get_busy():

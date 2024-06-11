@@ -11,7 +11,7 @@ SENSITIVITY = 0.08
 
 
 class Camera:
-    def __init__(self, app, position=(15, 2, 7), yaw=-90, pitch=0):
+    def __init__(self, app, position=(0, 2, 0), yaw=-90, pitch=0):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)
@@ -54,6 +54,7 @@ class Camera:
         keys = pg.key.get_pressed()
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
             distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
+            print(self.position)
             if distance < 20:
                 volume = round(distance) / 20
                 volume_normalized = abs(volume - 1)
