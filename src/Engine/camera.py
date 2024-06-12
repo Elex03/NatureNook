@@ -1,7 +1,7 @@
 import glm
 
 from math import sqrt
-from colitions import Collisions
+from collisions import Collisions
 import pygame as pg
 
 FOV = 50  # deg
