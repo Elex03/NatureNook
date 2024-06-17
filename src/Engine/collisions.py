@@ -1,6 +1,6 @@
 
 class Collisions:
-    def _init_(self, app):
+    def __init__(self, app):
         self.app = app
         self.positions_models = (7, 7)
         self.limits = (5, -5)
@@ -13,6 +13,7 @@ class Collisions:
         bool_z1 = self.positions_models[0] + self.limits[1] < self.app.z < self.positions_models[0] - self.limits[1]
         bool_z2 = self.positions_models[1] + self.limits[1] < self.app.z < self.positions_models[1] - self.limits[1]
         if (bool_x1 and bool_x2) and (bool_z1 and bool_z2):
+            self.app.control.vubration()
             return False
         else:
             return True

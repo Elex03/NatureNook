@@ -3,6 +3,7 @@ import glm
 from math import sqrt
 from collisions import Collisions
 import pygame as pg
+from control import Control
 
 FOV = 50  # deg
 NEAR = 0.1
@@ -12,7 +13,7 @@ SENSITIVITY = 0.08
 
 
 class Camera:
-    def _init_(self, app, position=(0, 2, 0), yaw=-90, pitch=0):
+    def __init__(self, app, position=(0, 2, 0), yaw=-90, pitch=0):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)
@@ -30,6 +31,8 @@ class Camera:
         # auxiliar
         self.x = 0
         self.z = 0
+        # control
+        self.control = Control(self)
         # coalitions
         self.collisions = Collisions(self)
 
