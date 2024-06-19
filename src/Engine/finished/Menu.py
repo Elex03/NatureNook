@@ -24,12 +24,12 @@ class Menu:
         screen = pg.display.get_surface()
         screen.blit(self.background_img, (0, 0))
         current_time = time.time()
-        if current_time - self.start_time < 3:
+        if current_time - self.start_time < 0:
             self.draw_text("Press SPACE to pause", 160, 250)
         else:
             self.button_manager.draw_buttons(screen, self.menu_state)
             if self.menu_state == "audio":
-                self.draw_text("Sound", 150, 210)  # Draw the "Sound" text above the slider
+                self.draw_text("Sound", 320, 120)  # Draw the "Sound" text above the slider
                 self.volume_slider.draw(screen)
                 self.button_manager.create_button("back", 150, 350, "button_back.png", 1, "audio")
                 self.button_manager.draw_buttons(screen, "audio")  # Draw the "Back" button

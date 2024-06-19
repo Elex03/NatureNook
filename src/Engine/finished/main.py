@@ -42,6 +42,8 @@ class GraphicEngine:
         self.button_manager.create_button("keys", 246, 325, "button_keys.png", 1, "options")
         self.button_manager.create_button("back", 332, 450, "button_back.png", 1, "options")
 
+        # Audio menu buttons
+        self.button_manager.create_button("back", 150, 350, "button_back.png", 1,    "audio")  # Add back button for audio menu
     def set_mode(self):
         if self.game_paused:
             self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)
