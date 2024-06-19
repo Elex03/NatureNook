@@ -41,5 +41,4 @@ class ButtonManager:
         self.buttons = {}
         self.selected_index = 0
 
-    def handle_event(self, event, menu):
-        pass
+    def handle_event(self, event, menu):pass

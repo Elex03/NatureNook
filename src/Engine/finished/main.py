@@ -15,7 +15,7 @@ class GraphicEngine:
         self.game_paused = True
 
         # Initialize ImageLoader
-        img_folder = r'C:\Users\HP\Desktop\proyecto\NatureNook\src\Engine\finished\botton'
+        img_folder = r'botton/'
         self.image_loader = ImageLoader(img_folder)
 
         # Initialize ButtonManager and create buttons
@@ -71,7 +71,7 @@ class GraphicEngine:
                     if action == "resume":
                         self.game_paused = False
                         self.set_mode()
-                if event.key in [pg.K_a, pg.K_d, pg.K_b]:  # Añadir soporte para las teclas A, D y B
+                if event.key in [pg.K_a, pg.K_d, pg.K_b]:
                     self.menu.handle_event(event)
             if event.type == pg.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Click izquierdo del mouse

@@ -13,7 +13,7 @@ class Menu:
         self.start_time = time.time()
 
         # Initialize slider for audio settings
-        self.volume_slider = Slider(150, 250, 500, 20, 0, 100, 50)
+        self.volume_slider = Slider(150, 250, 500, 20, 0, 100, 50) #volumen configuracion basg
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.text_color)

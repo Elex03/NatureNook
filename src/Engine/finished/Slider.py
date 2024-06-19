@@ -43,7 +43,7 @@ class Slider:
         rel_x = pos_x - self.rect.x
         self.val = (rel_x / self.rect.width) * (self.max_val - self.min_val) + self.min_val
         self.val = max(self.min_val, min(self.max_val, self.val))
-        print(f"Volume: {int(self.val)}%")
+        print(f"Sound: {int(self.val)}%")
 
     def adjust_value(self, delta):
         self.val += delta
