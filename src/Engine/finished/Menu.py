@@ -11,9 +11,10 @@ class Menu:
         self.background_img = background_img
         self.menu_state = "main"
         self.start_time = time.time()
+        self.mouse_selected_button = None
 
         # Initialize slider for audio settings
-        self.volume_slider = Slider(150, 250, 500, 20, 0, 100, 50) #volumen configuracion basg
+        self.volume_slider = Slider(150, 250, 500, 20, 0, 100, 50)
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.text_color)
@@ -29,10 +30,8 @@ class Menu:
         else:
             self.button_manager.draw_buttons(screen, self.menu_state)
             if self.menu_state == "audio":
-                self.draw_text("Sound", 320, 120)  # Draw the "Sound" text above the slider
                 self.volume_slider.draw(screen)
-                self.button_manager.create_button("back", 150, 350, "button_back.png", 1, "audio")
-                self.button_manager.draw_buttons(screen, "audio")  # Draw the "Back" button
+                self.draw_text(f"Sound", 325, 190)
         pg.display.flip()
         return self.menu_state
 
@@ -56,23 +55,28 @@ class Menu:
         elif selected_button == "keys":
             print("Change Key Bindings")
         elif selected_button == "back":
-            if self.menu_state == "audio":
-                self.menu_state = "options"
-            else:
-                self.menu_state = "main"
+            self.menu_state = "main"
         return "main"
 
     def handle_event(self, event):
         self.button_manager.handle_event(event, self.menu_state)
         if self.menu_state == "audio":
             self.volume_slider.handle_event(event)
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_a:
-                    self.volume_slider.adjust_value(-1)
-                elif event.key == pg.K_d:
-                    self.volume_slider.adjust_value(1)
-                elif event.key == pg.K_b:  # Handle 'b' key to go back
-                    self.menu_state = "options"
             # Set the volume of the sounds in your program
             volume = self.volume_slider.get_value() / 100
             pg.mixer.music.set_volume(volume)
+            print(f"Volume: {self.volume_slider.get_value()}%")
+
+    def adjust_volume_continuously(self):
+        keys = pg.key.get_pressed()
+        if self.menu_state == "audio":
+            if keys[pg.K_a]:
+                self.volume_slider.adjust_value(-1)
+                volume = self.volume_slider.get_value() / 100
+                pg.mixer.music.set_volume(volume)
+                print(f"Sound: {self.volume_slider.get_value()}%")
+            if keys[pg.K_d]:
+                self.volume_slider.adjust_value(1)
+                volume = self.volume_slider.get_value() / 100
+                pg.mixer.music.set_volume(volume)
+                print(f"Sound: {self.volume_slider.get_value()}%")

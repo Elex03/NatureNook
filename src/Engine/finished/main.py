@@ -1,6 +1,5 @@
 import pygame as pg
 import moderngl as mgl
-import sys
 from ImageLoader import ImageLoader
 from ButtonManager import ButtonManager
 from Menu import Menu
@@ -42,20 +41,6 @@ class GraphicEngine:
         else:
             self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
 
-    def adjust_volume_continuously(self):
-        keys = pg.key.get_pressed()
-        if self.menu.menu_state == "audio":
-            if keys[pg.K_a]:
-                self.menu.volume_slider.adjust_value(-1)
-                volume = self.menu.volume_slider.get_value() / 100
-                pg.mixer.music.set_volume(volume)
-                print(f"Volume: {self.menu.volume_slider.get_value()}%")
-            if keys[pg.K_d]:
-                self.menu.volume_slider.adjust_value(1)
-                volume = self.menu.volume_slider.get_value() / 100
-                pg.mixer.music.set_volume(volume)
-                print(f"Volume: {self.menu.volume_slider.get_value()}%")
-
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
         pg.display.flip()
@@ -63,7 +48,7 @@ class GraphicEngine:
     def run(self):
         while True:
             self.event_checker.check_events()  # Use EventChecker to handle events
-            self.adjust_volume_continuously()  # Adjust volume continuously based on key presses
+            self.menu.adjust_volume_continuously()  # Adjust volume continuously based on key presses
             if self.game_paused:
                 action = self.menu.draw_menu()
                 if action == "resume":
