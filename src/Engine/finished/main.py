@@ -17,7 +17,7 @@ class GraphicEngine:
         self.game_paused = True
 
         # Initialize ImageLoader
-        img_folder = r'C:\Users\HP\Desktop\proyecto\NatureNook\src\Engine\finished\botton'
+        img_folder = r'botton/'
         self.image_loader = ImageLoader(img_folder)
 
         # Initialize ButtonManager and create buttons
