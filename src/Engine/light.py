@@ -5,7 +5,7 @@ class Light:
     def __init__(self, app, touse, pos):
         self.app = app
         if touse:
-            self.light((50, 50, -10))
+            self.light((50, 50, 0))
         else:
             self.light1(pos)
 
