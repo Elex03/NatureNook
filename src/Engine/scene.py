@@ -3,7 +3,6 @@ import glm
 import random
 from light import Light
 
-
 class Scene:
     def __init__(self, app):
         self.app = app
@@ -41,13 +40,13 @@ class Scene:
                     x_pos = x + random.uniform(0, 1)
                     z_pos = z + random.uniform(0, 2)
                     add(Trunk(app, pos=(x_pos, -2, z_pos)))
-                    add(Leaves(app, pos=(x_pos, -2, z_pos)))
+                    add(Leaves(app, pos=(x_pos, -2, z_pos), tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
                     self.app.Position.append((x_pos, z_pos))
             self.app.var = False
         else:
             for i in range(0, len(app.Position)):
                 add(Trunk(app, pos=(app.Position[i][0], -2, app.Position[i][1])))
-                add(Leaves(app, pos=(app.Position[i][0], -2, app.Position[i][1])))
+                add(Leaves(app, pos=(app.Position[i][0], -2, app.Position[i][1]), tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
 
         add(self.app.moving_cube)
         add(self.app.moving_lamp)
@@ -69,7 +68,6 @@ class Scene:
         if not self.app.is_day:
             self.app.position_lamp = glm.vec3(new_x, new_y, new_z)
             self.app.light = Light(self.app, False, self.app.position_lamp)
-
 
 '''
 

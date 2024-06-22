@@ -11,7 +11,10 @@ class Texture:
             0: self.get_texture(path='resources/models/textures/grass1.jpg'),
             'trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
             'Old_Lantern': self.get_texture(path='resources/models/textures/Lantern_baseColor.jpeg'),
-            'leaves': self.get_texture(path='resources/models/textures/leaf.jpg'),
+            'leaf1': self.get_texture(path='resources/models/textures/Leaf_Duglas.jpg'),
+            'leaf2': self.get_texture(path='resources/models/textures/leaf_Pine.jpg'),
+            'leaf3': self.get_texture(path='resources/models/textures/leaf_Sakura.jpg'),
+            'leaf4': self.get_texture(path='resources/models/textures/leaf_Brown.jpg'),
             'grass': {
                 2: self.get_texture(path='resources/models/textures/grass_2.png'),
                 1: self.get_texture(path='resources/models/textures/grass_1.png'),

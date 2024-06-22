@@ -1,6 +1,5 @@
 import glm
 
-
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         self.app = app
@@ -9,10 +8,14 @@ class BaseModel:
         self.rot = glm.vec3([glm.radians(a) for a in rot])
         self.scale = glm.vec3(scale)
         self.m_model = self.get_model_matrix()
-        self.tex_id = tex_id
+        self._tex_id = tex_id
+        self._texture = None
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
+
+        # Set initial texture
+        self.set_texture(tex_id)
 
     @property
     def pos(self):
@@ -23,7 +26,24 @@ class BaseModel:
         self._pos = glm.vec3(new_pos)
         self.m_model = self.get_model_matrix()
 
-    def update(self): ...
+    @property
+    def tex_id(self):
+        return self._tex_id
+
+    @tex_id.setter
+    def tex_id(self, new_tex_id):
+        self._tex_id = new_tex_id
+        self.set_texture(new_tex_id)
+
+    def set_texture(self, tex_id):
+        self._texture = self.app.mesh.texture.textures.get(tex_id)
+        if self._texture is None:
+            raise ValueError(f"Texture ID '{tex_id}' not found in textures dictionary")
+        if isinstance(self._texture, dict):
+            self._texture = self._texture[0]
+
+    def update(self):
+        pass
 
     def get_model_matrix(self):
         m_model = glm.mat4()
@@ -38,17 +58,18 @@ class BaseModel:
         self.update()
         self.vao.render()
 
+
 class ExtendedBaseModel(BaseModel):
     def __init__(self, app, vao_name, tex_id, pos, rot, scale):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
         self.shadow_program = None
         self.shadow_vao = None
         self.depth_texture = None
-        self.texture = None
         self.on_init()
 
     def update(self):
-        self.texture.use(location=0)
+        if self._texture:
+            self._texture.use(location=0)
         self.program['camPos'].write(self.camera.position)
         self.program['m_view'].write(self.camera.m_view)
         self.program['m_model'].write(self.m_model)
@@ -73,9 +94,9 @@ class ExtendedBaseModel(BaseModel):
                 raise ValueError(f"Texture ID '{self.tex_id}' not found in textures dictionary")
 
             if isinstance(texture_data, dict):
-                self.texture = texture_data[0]
+                self._texture = texture_data[0]
             else:
-                self.texture = texture_data
+                self._texture = texture_data
 
             self.depth_texture = self.app.mesh.texture.textures['depth_texture']
             self.program['shadowMap'] = 1
@@ -89,7 +110,8 @@ class ExtendedBaseModel(BaseModel):
                 self.shadow_program['m_model'].write(self.m_model)
 
             self.program['u_texture_0'] = 0
-            self.texture.use(location=0)
+            if self._texture:
+                self._texture.use(location=0)
 
             self.program['m_proj'].write(self.camera.m_proj)
             self.program['m_view'].write(self.camera.m_view)
@@ -105,6 +127,7 @@ class ExtendedBaseModel(BaseModel):
             print(f"ValueError: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
+
 
 class Cube(ExtendedBaseModel):
     def __init__(self, app, vao_name='cube', tex_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
@@ -133,7 +156,7 @@ class Old_Lantern(ExtendedBaseModel):
 
 
 class Leaves(ExtendedBaseModel):
-    def __init__(self, app, vao_name='leaves', tex_id='leaves',
+    def __init__(self, app, vao_name='leaves', tex_id='leaves1',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
@@ -155,9 +178,9 @@ class SkyBox(BaseModel):
 
     def on_init(self):
         # texture
-        self.texture = self.app.mesh.texture.textures[self.tex_id]
+        self._texture = self.app.mesh.texture.textures[self.tex_id]
         self.program['u_texture_skybox'] = 0
-        self.texture.use(location=0)
+        self._texture.use(location=0)
         # mvp
         self.program['m_proj'].write(self.camera.m_proj)
         self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
@@ -175,6 +198,6 @@ class AdvancedSkyBox(BaseModel):
 
     def on_init(self):
         # texture
-        self.texture = self.app.mesh.texture.textures[self.tex_id]
+        self._texture = self.app.mesh.texture.textures[self.tex_id]
         self.program['u_texture_skybox'] = 0
-        self.texture.use(location=0)
+        self._texture.use(location=0)

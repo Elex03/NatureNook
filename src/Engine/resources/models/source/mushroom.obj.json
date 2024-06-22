@@ -1,0 +1,21 @@
+{
+  "created_at": "2024-06-22T09:15:35.362220",
+  "version": "0.1",
+  "mtllibs": [
+    "mushroom.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "mushroom-2",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 98784
+    },
+    {
+      "material": "mushroom-2_mushroom-2.jpg",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 98784,
+      "byte_length": 3487680
+    }
+  ]
+}

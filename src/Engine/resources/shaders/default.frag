@@ -20,10 +20,25 @@ uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 
+
 float lookup(float ox, float oy) {
     vec2 pixelOffset = 1.0 / u_resolution;
-    return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w, oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
+    return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w,
+                                                     oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
 }
+
+
+float getSoftShadowX4() {
+    float shadow = 0.0;
+    float swidth = 1.5;  // shadow spread
+    vec2 offset = mod(floor(gl_FragCoord.xy), 2.0) * swidth;
+    shadow += lookup(-1.5 * swidth + offset.x, 1.5 * swidth - offset.y);
+    shadow += lookup(-1.5 * swidth + offset.x, -0.5 * swidth - offset.y);
+    shadow += lookup( 0.5 * swidth + offset.x, 1.5 * swidth - offset.y);
+    shadow += lookup( 0.5 * swidth + offset.x, -0.5 * swidth - offset.y);
+    return shadow / 4.0;
+}
+
 
 float getSoftShadowX16() {
     float shadow = 0.0;
@@ -37,16 +52,36 @@ float getSoftShadowX16() {
     return shadow / 16.0;
 }
 
+
+float getSoftShadowX64() {
+    float shadow = 0.0;
+    float swidth = 0.6;
+    float endp = swidth * 3.0 + swidth / 2.0;
+    for (float y = -endp; y <= endp; y += swidth) {
+        for (float x = -endp; x <= endp; x += swidth) {
+            shadow += lookup(x, y);
+        }
+    }
+    return shadow / 64.0;
+}
+
+
+float getShadow() {
+    float shadow = textureProj(shadowMap, shadowCoord);
+    return shadow;
+}
+
+
 vec3 getLight(vec3 color) {
     vec3 Normal = normalize(normal);
 
     // ambient light
-    vec3 ambient = light.Ia * color;
+    vec3 ambient = light.Ia;
 
     // diffuse light
     vec3 lightDir = normalize(light.position - fragPos);
-    float diff = max(dot(lightDir, Normal), 0.0);
-    vec3 diffuse = diff * light.Id * color;
+    float diff = max(0.0, dot(lightDir, Normal));
+    vec3 diffuse = diff * light.Id;
 
     // specular light
     vec3 viewDir = normalize(camPos - fragPos);
@@ -55,10 +90,12 @@ vec3 getLight(vec3 color) {
     vec3 specular = spec * light.Is;
 
     // shadow
+    // float shadow = getShadow();
     float shadow = getSoftShadowX16();
 
-    return ambient + (diffuse + specular) * shadow;
+    return color * (ambient + (diffuse + specular) * shadow);
 }
+
 
 void main() {
     float gamma = 2.2;

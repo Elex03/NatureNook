@@ -13,7 +13,7 @@ pg.init()
 pg.mixer.init()
 
 class GraphicsEngine:
-    def __init__(self, win_size=(630, 480)):
+    def __init__(self, win_size=(840, 480)):
         # window size
         self.WIN_SIZE = win_size
         # skybox change state
