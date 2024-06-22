@@ -44,15 +44,8 @@ class GraphicsEngine:
         self.delta_time = 0
         # color of the light
         self.color = [(1, 1, 1), (0.145, 0.157, 0.314)]
-        self.color_fire = ([
-            [1.0, 0.6, 0.2],  # Más amarillo y menos saturado
-            [1.0, 0.4, 0.2],  # Añadido amarillo y suavizado
-            [1.0, 0.2, 0.2],  # Reducida la saturación del rojo
-            [0.7, 0.1, 0.1],])
-
         # camera
         self.is_day = True
-
         self.camera = Camera(self)
         self.position_camera = self.camera.position
         # light
@@ -77,16 +70,15 @@ class GraphicsEngine:
                 pg.quit()
                 sys.exit()
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
+                app.is_day = True if app.is_day == False else False
                 # change state of the light
-                app.is_day = False if app.is_day else True
-
-            if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
-                # reload light
                 self.light = Light(self, app.is_day, app.position_camera)
-
-                # renderer
+                # reload mesh 
+                self.mesh = Mesh(self)
+                # reload scene
+                self.scene = Scene(self)
+                # reload renderer
                 self.scene_renderer = SceneRenderer(self)
-
 
     def render(self):
         # clear frame buffer
