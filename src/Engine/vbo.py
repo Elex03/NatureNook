@@ -101,7 +101,7 @@ class Old_LanternVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('src/Engine/resources/models/source/Old_Lantern.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('src/Engine/resources/models/source/Old_Lampare.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         max_value = np.min(obj.vertices[::2])
         print(max_value)
