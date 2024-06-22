@@ -1,0 +1,33 @@
+{
+  "created_at": "2024-06-22T00:07:15.317039",
+  "version": "0.1",
+  "mtllibs": [
+    "grass.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "1300954650",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 17841600
+    },
+    {
+      "material": "2785131480",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 17841600,
+      "byte_length": 186240
+    },
+    {
+      "material": "3457643232",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 18027840,
+      "byte_length": 263136
+    },
+    {
+      "material": "383085165",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 18290976,
+      "byte_length": 495936
+    }
+  ]
+}
