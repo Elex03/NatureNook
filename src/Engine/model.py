@@ -38,7 +38,6 @@ class BaseModel:
         self.update()
         self.vao.render()
 
-
 class ExtendedBaseModel(BaseModel):
     def __init__(self, app, vao_name, tex_id, pos, rot, scale):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
@@ -69,13 +68,14 @@ class ExtendedBaseModel(BaseModel):
             self.program['m_view_light'].write(self.app.light.m_view_light)
             self.program['u_resolution'].write(glm.vec2(self.app.WIN_SIZE))
 
-            if isinstance(self.app.mesh.texture.textures[self.tex_id], dict):
-                self.texture = self.app.mesh.texture.textures[self.tex_id][0]
-            else:
-                self.texture = self.app.mesh.texture.textures[self.tex_id]
-
-            if not self.texture:
+            texture_data = self.app.mesh.texture.textures.get(self.tex_id)
+            if texture_data is None:
                 raise ValueError(f"Texture ID '{self.tex_id}' not found in textures dictionary")
+
+            if isinstance(texture_data, dict):
+                self.texture = texture_data[0]
+            else:
+                self.texture = texture_data
 
             self.depth_texture = self.app.mesh.texture.textures['depth_texture']
             self.program['shadowMap'] = 1
@@ -105,7 +105,6 @@ class ExtendedBaseModel(BaseModel):
             print(f"ValueError: {e}")
         except Exception as e:
             print(f"Unexpected error: {e}")
-
 
 class Cube(ExtendedBaseModel):
     def __init__(self, app, vao_name='cube', tex_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):

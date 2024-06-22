@@ -12,8 +12,11 @@ class Texture:
             'trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
             'Old_Lantern': self.get_texture(path='resources/models/textures/Lantern_baseColor.jpeg'),
             'leaves': self.get_texture(path='resources/models/textures/leaf.jpg'),
-            'grass': {1: self.get_texture(path='resources/models/textures/grass_1.png'),
-                      0: self.get_texture(path='resources/models/textures/grass.png')},
+            'grass': {
+                2: self.get_texture(path='resources/models/textures/grass_2.png'),
+                1: self.get_texture(path='resources/models/textures/grass_1.png'),
+                0: self.get_texture(path='resources/models/textures/grass.png')
+            },
             'skybox': self.get_texture_cube(dir_path='resources/textures/' + self.get_texture_skybox + '/', ext='png'),
             'depth_texture': self.get_depth_texture()
         }

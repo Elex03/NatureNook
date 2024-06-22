@@ -21,9 +21,8 @@ uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 
 float lookup(float ox, float oy) {
-    vec2 pixelOffset = 1 / u_resolution;
-    return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w,
-                                                     oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
+    vec2 pixelOffset = 1.0 / u_resolution;
+    return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w, oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
 }
 
 float getSoftShadowX16() {
@@ -42,23 +41,23 @@ vec3 getLight(vec3 color) {
     vec3 Normal = normalize(normal);
 
     // ambient light
-    vec3 ambient = light.Ia;
+    vec3 ambient = light.Ia * color;
 
     // diffuse light
     vec3 lightDir = normalize(light.position - fragPos);
-    float diff = max(0, dot(lightDir, Normal));
-    vec3 diffuse = diff * light.Id;
+    float diff = max(dot(lightDir, Normal), 0.0);
+    vec3 diffuse = diff * light.Id * color;
 
     // specular light
     vec3 viewDir = normalize(camPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, Normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0), 32);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
     vec3 specular = spec * light.Is;
 
     // shadow
     float shadow = getSoftShadowX16();
 
-    return color * (ambient + (diffuse + specular) * shadow);
+    return ambient + (diffuse + specular) * shadow;
 }
 
 void main() {
@@ -68,6 +67,6 @@ void main() {
 
     color = getLight(color);
 
-    color = pow(color, 1 / vec3(gamma));
+    color = pow(color, vec3(1.0 / gamma));
     fragColor = vec4(color, 1.0);
 }

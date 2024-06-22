@@ -12,9 +12,8 @@ from scene_renderer import SceneRenderer
 pg.init()
 pg.mixer.init()
 
-
 class GraphicsEngine:
-    def __init__(self, win_size=(1200, 600)):
+    def __init__(self, win_size=(630, 480)):
         # window size
         self.WIN_SIZE = win_size
         # skybox change state
@@ -72,7 +71,7 @@ class GraphicsEngine:
                 self.is_day = not self.is_day
                 # change state of the light
                 self.light = Light(self, self.is_day, self.position_lamp)
-                # reload mesh 
+                # reload mesh
                 self.mesh = Mesh(self)
                 # reload scene
                 self.scene = Scene(self)
@@ -98,7 +97,6 @@ class GraphicsEngine:
             self.scene.update(app.position_camera)
             self.render()
             self.delta_time = self.clock.tick(60)
-
 
 if __name__ == '__main__':
     app = GraphicsEngine()
