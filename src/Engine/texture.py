@@ -7,14 +7,14 @@ class Texture:
     def __init__(self, app):
         self.app = app
         self.ctx = app.ctx
-        self.textures = {1: self.get_texture(path='src/Engine/resources/models/textures/diamond_mineral.jpg'),
-                         0: self.get_texture(path='src/Engine/resources/models/textures/grass1.jpg')}
+        self.textures = {1: self.get_texture(path='resources/models/textures/diamond_mineral.jpg'),
+                         0: self.get_texture(path='resources/models/textures/grass1.jpg')}
         self.get_texture_skybox = app.scene_skybox[0] if app.is_day else app.scene_skybox[1]
-        self.textures['trunk'] = self.get_texture(path='src/Engine/resources/models/textures/Trunk.jpg')
-        self.textures['Old_Lantern'] = self.get_texture(path='src/Engine/resources/models/textures/Lantern_baseColor.jpeg')
-        self.textures['leaves'] = self.get_texture(path='src/Engine/resources/models/textures/leaf.jpg')
-        self.textures['grass'] = self.get_texture(path='src/Engine/resources/models/textures/grass.png')
-        self.textures['skybox'] = self.get_texture_cube(dir_path='src/Engine/resources/textures/'+self.get_texture_skybox+'/', ext='png')
+        self.textures['trunk'] = self.get_texture(path='resources/models/textures/Trunk.jpg')
+        self.textures['Old_Lantern'] = self.get_texture(path='resources/models/textures/Lantern_baseColor.jpeg')
+        self.textures['leaves'] = self.get_texture(path='resources/models/textures/leaf.jpg')
+        self.textures['grass'] = self.get_texture(path='resources/models/textures/grass.png')
+        self.textures['skybox'] = self.get_texture_cube(dir_path='resources/textures/'+self.get_texture_skybox+'/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
 
     def get_depth_texture(self):

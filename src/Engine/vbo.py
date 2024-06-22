@@ -88,7 +88,7 @@ class TrunkVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('src/Engine/resources/models/source/Tree.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('resources/models/source/Tree.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')
@@ -102,7 +102,7 @@ class Old_LanternVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('src/Engine/resources/models/source/Old_Lampare.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('resources/models/source/Old_Lampare.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         max_value = np.min(obj.vertices[::2])
         print(max_value)
@@ -117,7 +117,7 @@ class LeavesVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('src/Engine/resources/models/source/Leaves.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('resources/models/source/Leaves.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')
@@ -130,7 +130,7 @@ class GrassVBO(BaseVBO):
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('src/Engine/resources/models/source/grass.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront('resources/models/source/grass.obj', cache=True, parse=True)
         obj = objs.materials.popitem()[1]
         vertex_data = obj.vertices
         vertex_data = np.array(vertex_data, dtype='f4')
