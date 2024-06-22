@@ -7,11 +7,13 @@ class Texture:
     def __init__(self, app):
         self.app = app
         self.ctx = app.ctx
-        self.textures = {1: self.get_texture(path='resources/textures/grand.jpg'),
-                         0: self.get_texture(path='resources/textures/grand.jpg')}
+        self.textures = {1: self.get_texture(path='src/Engine/resources/models/textures/diamond_mineral.jpg'),
+                         0: self.get_texture(path='src/Engine/resources/models/textures/grass1.jpg')}
         self.get_texture_skybox = app.scene_skybox[0] if app.is_day else app.scene_skybox[1]
-        print(self.get_texture_skybox)
-        self.textures['skybox'] = self.get_texture_cube(dir_path='resources/textures/'+self.get_texture_skybox+'/', ext='png')
+        self.textures['trunk'] = self.get_texture(path='src/Engine/resources/models/textures/Trunk.jpg')
+        self.textures['Old_Lantern'] = self.get_texture(path='src/Engine/resources/models/textures/Lantern_baseColor.jpeg')
+        self.textures['leaves'] = self.get_texture(path='src/Engine/resources/models/textures/leaf.jpg')
+        self.textures['skybox'] = self.get_texture_cube(dir_path='src/Engine/resources/textures/'+self.get_texture_skybox+'/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
 
     def get_depth_texture(self):
@@ -42,16 +44,25 @@ class Texture:
         return texture_cube
 
     def get_texture(self, path):
-        texture = pg.image.load(path).convert()
+        # Cargar la imagen con soporte para canal alfa
+        texture = pg.image.load(path).convert_alpha()
+
+        # Voltear la imagen en el eje y
         texture = pg.transform.flip(texture, flip_x=False, flip_y=True)
-        texture = self.ctx.texture(size=texture.get_size(), components=3,
-                                   data=pg.image.tostring(texture, 'RGB'))
-        # mipmaps
+
+        # Convertir la imagen a una cadena de caracteres incluyendo el canal alfa ('RGBA')
+        texture_data = pg.image.tostring(texture, 'RGBA')
+
+        # Crear la textura con 4 componentes (RGBA)
+        texture = self.ctx.texture(size=texture.get_size(), components=4, data=texture_data)
+
+        # Generar mipmaps
         texture.filter = (mgl.LINEAR_MIPMAP_LINEAR, mgl.LINEAR)
         texture.build_mipmaps()
-        # AF
-        texture.anisotropy = 32.0
-        return texture
 
+        # Anisotropic filtering
+        texture.anisotropy = 32.0
+
+        return texture
     def destroy(self):
         [tex.release() for tex in self.textures.values()]

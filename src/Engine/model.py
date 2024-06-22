@@ -1,27 +1,35 @@
 import moderngl as mgl
-import numpy as np
 import glm
 
 
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         self.app = app
-        self.pos = pos
+        self._pos = glm.vec3(pos)
         self.vao_name = vao_name
         self.rot = glm.vec3([glm.radians(a) for a in rot])
-        self.scale = scale
+        self.scale = glm.vec3(scale)
         self.m_model = self.get_model_matrix()
         self.tex_id = tex_id
         self.vao = app.mesh.vao.vaos[vao_name]
         self.program = self.vao.program
         self.camera = self.app.camera
 
+    @property
+    def pos(self):
+        return self._pos
+
+    @pos.setter
+    def pos(self, new_pos):
+        self._pos = glm.vec3(new_pos)
+        self.m_model = self.get_model_matrix()
+
     def update(self): ...
 
     def get_model_matrix(self):
         m_model = glm.mat4()
         # translate
-        m_model = glm.translate(m_model, self.pos)
+        m_model = glm.translate(m_model, self._pos)
         # rotate
         m_model = glm.rotate(m_model, self.rot.z, glm.vec3(0, 0, 1))
         m_model = glm.rotate(m_model, self.rot.y, glm.vec3(0, 1, 0))
@@ -97,9 +105,21 @@ class MovingCube(Cube):
         super().update()
 
 
-class Cat(ExtendedBaseModel):
-    def __init__(self, app, vao_name='cat', tex_id='cat',
-                 pos=(0, 0, 0), rot=(-90, 0, 0), scale=(1, 1, 1)):
+class Trunk(ExtendedBaseModel):
+    def __init__(self, app, vao_name='trunk', tex_id='trunk',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
+class Old_Lantern(ExtendedBaseModel):
+    def __init__(self, app, vao_name='Old_Lantern', tex_id='Old_Lantern',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
+class Leaves(ExtendedBaseModel):
+    def __init__(self, app, vao_name='leaves', tex_id='leaves',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
@@ -137,22 +157,3 @@ class AdvancedSkyBox(BaseModel):
         self.texture = self.app.mesh.texture.textures[self.tex_id]
         self.program['u_texture_skybox'] = 0
         self.texture.use(location=0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,5 @@
+import time
+
 import pygame as pg
 import moderngl as mgl
 import sys
@@ -11,52 +13,64 @@ from scene_renderer import SceneRenderer
 pg.init()
 pg.mixer.init()
 
-sound = pg.mixer.Sound('resources/sounds/a.wav')
-
 
 class GraphicsEngine:
     def __init__(self, win_size=(630, 480)):
         # window size
         self.WIN_SIZE = win_size
         # skybox change state
-        self.scene_skybox = ('skybox2', 'skybox1')
+        self.scene_skybox = ('Skybox2', 'skybox1')
         # init pygame modules
         pg.init()
         # set opengl attr
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
+
         # create opengl context
-        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF | pg.SRCALPHA)
         # mouse settings
         pg.event.set_grab(True)
         pg.mouse.set_visible(False)
         # detect and use existing opengl context
         self.ctx = mgl.create_context()
-        # self.ctx.front_face = 'cw'
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
+        self.ctx.blend_func = (mgl.SRC_ALPHA, mgl.ONE_MINUS_SRC_ALPHA)
+        self.ctx.front_face = 'ccw'  # 'ccw' means counter-clockwise, which is the default
+        self.ctx.cull_face = 'back'  # Cull back faces (default)
         # create an object to help track time
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
         # color of the light
         self.color = [(1, 1, 1), (0.145, 0.157, 0.314)]
-        self.is_day = True
-        # light
-        self.light = Light(self)
+        self.color_fire = ([
+            [1.0, 0.6, 0.2],  # Más amarillo y menos saturado
+            [1.0, 0.4, 0.2],  # Añadido amarillo y suavizado
+            [1.0, 0.2, 0.2],  # Reducida la saturación del rojo
+            [0.7, 0.1, 0.1],])
+
         # camera
+        self.is_day = True
+
         self.camera = Camera(self)
+        self.position_camera = self.camera.position
+        # light
+        self.light = Light(self, True, (50, 50, -10))
+        # Array
+        self.Position = []
         # mesh
         self.mesh = Mesh(self)
         # scene
+        self.var = True
         self.scene = Scene(self)
+        self.var = False
         # renderer
         self.scene_renderer = SceneRenderer(self)
-        # sound
-        self.sound_music = pg.mixer.Sound('resources/sounds/sound.mp3')
 
     def check_events(self):
         for event in pg.event.get():
+            keys = pg.key.get_pressed()
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.mesh.destroy()
                 self.scene_renderer.destroy()
@@ -65,22 +79,14 @@ class GraphicsEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
                 # change state of the light
                 app.is_day = False if app.is_day else True
+
+            if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
                 # reload light
-                self.light = Light(self)
-                # reload mesh
-                self.mesh.update()
-                # scene
-                self.scene = Scene(self)
+                self.light = Light(self, app.is_day, app.position_camera)
+
                 # renderer
                 self.scene_renderer = SceneRenderer(self)
 
-
-            pulsar = pg.key.get_pressed()
-            if pulsar[pg.K_a] or pulsar[pg.K_s] or pulsar[pg.K_d] or pulsar[pg.K_w]:
-                if not pg.mixer.Channel(0).get_busy():
-                    print(self.sound_music.get_volume())
-            else:
-                sound.fadeout(500)
 
     def render(self):
         # clear frame buffer
@@ -99,10 +105,10 @@ class GraphicsEngine:
             self.check_events()
             self.camera.update()
             self.render()
+            self.scene.update(self.position_camera)
             self.delta_time = self.clock.tick(60)
 
 
 if __name__ == '__main__':
     app = GraphicsEngine()
-    app.sound_music.play()
     app.run()

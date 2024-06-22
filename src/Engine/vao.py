@@ -9,28 +9,28 @@ class VAO:
         self.program = ShaderProgram(ctx)
         self.vaos = {}
 
-        # cube vao
-        self.vaos['cube'] = self.get_vao(
-            program=self.program.programs['default'],
-            vbo = self.vbo.vbos['cube'])
+        # Crear los VAOs para cada objeto y su sombra
+        self.create_vaos()
 
-        # shadow cube vao
-        self.vaos['shadow_cube'] = self.get_vao(
-            program=self.program.programs['shadow_map'],
-            vbo = self.vbo.vbos['cube'])
+    def create_vaos(self):
+        vao_definitions = [
+            ('cube', 'default', 'cube'),
+            ('shadow_cube', 'shadow_map', 'cube'),
+            ('trunk', 'default', 'trunk'),
+            ('shadow_trunk', 'shadow_map', 'trunk'),
+            ('Old_Lantern', 'default', 'Old_Lantern'),
+            ('shadow_Old_Lantern', 'shadow_map', 'Old_Lantern'),
+            ('leaves', 'default', 'leaves'),
+            ('shadow_leaves', 'shadow_map', 'leaves'),
+            ('skybox', 'skybox', 'skybox'),
+            ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
+        ]
 
-
-
-
-        # skybox vao
-        self.vaos['skybox'] = self.get_vao(
-            program=self.program.programs['skybox'],
-            vbo=self.vbo.vbos['skybox'])
-
-        # advanced_skybox vao
-        self.vaos['advanced_skybox'] = self.get_vao(
-            program=self.program.programs['advanced_skybox'],
-            vbo=self.vbo.vbos['advanced_skybox'])
+        for vao_name, program_name, vbo_name in vao_definitions:
+            self.vaos[vao_name] = self.get_vao(
+                program=self.program.programs[program_name],
+                vbo=self.vbo.vbos[vbo_name]
+            )
 
     def get_vao(self, program, vbo):
         vao = self.ctx.vertex_array(program, [(vbo.vbo, vbo.format, *vbo.attribs)], skip_errors=True)
