@@ -22,6 +22,8 @@ class VAO:
             ('shadow_Old_Lantern', 'shadow_map', 'Old_Lantern'),
             ('leaves', 'default', 'leaves'),
             ('shadow_leaves', 'shadow_map', 'leaves'),
+            ('grass', 'default', 'grass'),
+            ('shadow_grass', 'shadow_map', 'grass'),
             ('skybox', 'skybox', 'skybox'),
             ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
         ]

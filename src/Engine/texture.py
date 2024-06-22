@@ -13,6 +13,7 @@ class Texture:
         self.textures['trunk'] = self.get_texture(path='src/Engine/resources/models/textures/Trunk.jpg')
         self.textures['Old_Lantern'] = self.get_texture(path='src/Engine/resources/models/textures/Lantern_baseColor.jpeg')
         self.textures['leaves'] = self.get_texture(path='src/Engine/resources/models/textures/leaf.jpg')
+        self.textures['grass'] = self.get_texture(path='src/Engine/resources/models/textures/grass.png')
         self.textures['skybox'] = self.get_texture_cube(dir_path='src/Engine/resources/textures/'+self.get_texture_skybox+'/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
 

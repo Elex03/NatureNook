@@ -22,7 +22,10 @@ class Scene:
         n, s = 30, 2
         for x in range(-n, n, s):
             for z in range(-n, n, s):
+                x_pos = x + random.uniform(0, 1)
+                z_pos = z + random.uniform(0, 2)
                 add(Cube(app, pos=(x, -s, z)))
+                add(Grass(app, pos=(x_pos, -1, z_pos)))
 
 
       
@@ -53,9 +56,7 @@ class Scene:
         wave_amplitude = 0.5  # Amplitud para que oscile entre 1 y 2
         wave_frequency = 1
         offset = 1.5  # Offset para mantener la oscilación en el rango de 1 a 2
-
-        self.app.moving_lamp.pos = glm.vec3(pos[0] + 1, pos[1] - 1, pos[2] - 1)
-
+        
         new_x = pos[0] + radius * glm.sin(self.app.time)
         new_z = pos[2] + radius * glm.cos(self.app.time)
         new_y = wave_amplitude * glm.sin(wave_frequency * self.app.time) + offset
