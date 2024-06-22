@@ -12,7 +12,7 @@ class Light:
     def light(self, position):
         self.color = glm.vec3(self.app.color[0]) if self.app.is_day else glm.vec3(self.app.color[1])
         self.position = glm.vec3(position)
-        self.direction = glm.vec3(50, 50, -10)
+        self.direction = glm.vec3(0, 0 , 0)
         # intensities
         self.Ia = 0.2 * self.color  # ambient
         self.Id = 0.6 * self.color  # diffuse

@@ -1,5 +1,4 @@
 import time
-
 import pygame as pg
 import moderngl as mgl
 import sys
@@ -12,7 +11,6 @@ from scene_renderer import SceneRenderer
 
 pg.init()
 pg.mixer.init()
-
 
 class GraphicsEngine:
     def __init__(self, win_size=(630, 480)):
@@ -56,8 +54,8 @@ class GraphicsEngine:
         self.mesh = Mesh(self)
         # scene
         self.var = True
+        self.position_lamp = (0, 0, 0)  
         self.scene = Scene(self)
-        self.var = False
         # renderer
         self.scene_renderer = SceneRenderer(self)
 
@@ -69,10 +67,10 @@ class GraphicsEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
-                app.is_day = True if app.is_day == False else False
+            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                self.is_day = not self.is_day
                 # change state of the light
-                self.light = Light(self, app.is_day, app.position_camera)
+                self.light = Light(self, self.is_day, self.position_lamp)
                 # reload mesh 
                 self.mesh = Mesh(self)
                 # reload scene
@@ -96,10 +94,9 @@ class GraphicsEngine:
             self.get_time()
             self.check_events()
             self.camera.update()
+            self.scene.update(app.position_camera)
             self.render()
-            self.scene.update(self.position_camera)
             self.delta_time = self.clock.tick(60)
-
 
 if __name__ == '__main__':
     app = GraphicsEngine()
