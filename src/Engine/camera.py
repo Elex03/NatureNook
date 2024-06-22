@@ -4,7 +4,6 @@ from math import sqrt
 from collisions import Collisions
 import pygame as pg
 from control import Control
-from light import Light
 
 FOV = 50  # deg
 NEAR = 0.1
