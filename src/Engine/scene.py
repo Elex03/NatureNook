@@ -31,7 +31,7 @@ class Scene:
             for z in range(-n, n, s):
                 x_pos = x + random.uniform(0, 1)
                 z_pos = z + random.uniform(0, 2)
-                add(Grass(app, pos=(x_pos, -1, z_pos)))
+                # add(Grass(app, pos=(x_pos, -1, z_pos)))
 
         if self.app.var:
             self.app.moving_lamp = Old_Lantern(app, pos=(0, 3, 0))
@@ -50,15 +50,15 @@ class Scene:
                 add(Trunk(app, pos=(app.Position[i][0], -2, app.Position[i][1])))
                 add(Leaves(app, pos=(app.Position[i][0], -2, app.Position[i][1]), tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
 
-        add(self.app.moving_cube)
+        # add(self.app.moving_cube)
         add(self.app.moving_lamp)
 
     def update(self, pos):
         self.app.moving_cube.rot.xyz = self.app.time
         radius = 1
-        wave_amplitude = 0.5  # Amplitud para que oscile entre 1 y 2
+        wave_amplitude = 0.5
         wave_frequency = 1
-        offset = 1.5  # Offset para mantener la oscilación en el rango de 1 a 2
+        offset = 1.5
 
         new_x = pos[0] + radius * glm.sin(self.app.time)
         new_z = pos[2] + radius * glm.cos(self.app.time)
@@ -69,7 +69,7 @@ class Scene:
 
         if not self.app.is_day:
             self.app.position_lamp = glm.vec3(new_x, new_y, new_z)
-            self.app.light = Light(self.app, False, pos)
+            self.app.light = Light(self.app, False, self.app.position_lamp)
             Scene(self.app)
             # reload renderer
             SceneRenderer(self.app)

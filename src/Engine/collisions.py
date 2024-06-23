@@ -5,8 +5,6 @@ class Collisions:
 
     def check_limits(self, position):
         collisionFound = True
-        return collisionFound
-        '''
         length_positions = len(position)
         for i in range(length_positions):
             bool_x = position[i][0] - self.limits[0] < self.app.x < position[i][0] + self.limits[0]
@@ -19,7 +17,4 @@ class Collisions:
             return True
         else:
             return False
-        '''
-
-
 # finished
