@@ -20,14 +20,14 @@ uniform vec3 camPos;
 uniform sampler2DShadow shadowMap;
 uniform vec2 u_resolution;
 
-
+// Helper function to sample the shadow map with an offset
 float lookup(float ox, float oy) {
     vec2 pixelOffset = 1.0 / u_resolution;
     return textureProj(shadowMap, shadowCoord + vec4(ox * pixelOffset.x * shadowCoord.w,
                                                      oy * pixelOffset.y * shadowCoord.w, 0.0, 0.0));
 }
 
-
+// Function to get soft shadow using a 4-sample kernel
 float getSoftShadowX4() {
     float shadow = 0.0;
     float swidth = 1.5;  // shadow spread
@@ -39,7 +39,7 @@ float getSoftShadowX4() {
     return shadow / 4.0;
 }
 
-
+// Function to get soft shadow using a 16-sample kernel
 float getSoftShadowX16() {
     float shadow = 0.0;
     float swidth = 1.0;
@@ -52,7 +52,7 @@ float getSoftShadowX16() {
     return shadow / 16.0;
 }
 
-
+// Function to get soft shadow using a 64-sample kernel
 float getSoftShadowX64() {
     float shadow = 0.0;
     float swidth = 0.6;
@@ -65,13 +65,13 @@ float getSoftShadowX64() {
     return shadow / 64.0;
 }
 
-
+// Function to get basic shadow
 float getShadow() {
     float shadow = textureProj(shadowMap, shadowCoord);
     return shadow;
 }
 
-
+// Function to calculate the lighting with shadow
 vec3 getLight(vec3 color) {
     vec3 Normal = normalize(normal);
 
@@ -90,12 +90,10 @@ vec3 getLight(vec3 color) {
     vec3 specular = spec * light.Is;
 
     // shadow
-    // float shadow = getShadow();
     float shadow = getSoftShadowX16();
 
     return color * (ambient + (diffuse + specular) * shadow);
 }
-
 
 void main() {
     float gamma = 2.2;

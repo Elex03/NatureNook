@@ -2,6 +2,8 @@ from model import *
 import glm
 import random
 from light import Light
+from scene_renderer import SceneRenderer
+
 
 class Scene:
     def __init__(self, app):
@@ -53,7 +55,7 @@ class Scene:
 
     def update(self, pos):
         self.app.moving_cube.rot.xyz = self.app.time
-        radius = 0.5
+        radius = 1
         wave_amplitude = 0.5  # Amplitud para que oscile entre 1 y 2
         wave_frequency = 1
         offset = 1.5  # Offset para mantener la oscilación en el rango de 1 a 2
@@ -67,7 +69,10 @@ class Scene:
 
         if not self.app.is_day:
             self.app.position_lamp = glm.vec3(new_x, new_y, new_z)
-            self.app.light = Light(self.app, False, self.app.position_lamp)
+            self.app.light = Light(self.app, False, pos)
+            Scene(self.app)
+            # reload renderer
+            SceneRenderer(self.app)
 
 '''
 
