@@ -41,6 +41,7 @@ class Scene:
 
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
+            self.app.moving_lamp = fireFly(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
             n, s = 30, 5
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
@@ -61,10 +62,11 @@ class Scene:
             self.old_lantern = Old_Lantern_class(app, pos=(0, 3, 0))
             add(self.old_lantern)
         else:
-            Old_Latern_class = fireFly(app, pos=(0, 3, 0))
-            add(Old_Latern_class)
+            self.app.old_Latern_class = fireFly(app, pos=(0, 3, 0))
+            add(self.app.old_Latern_class)
 
     def update(self, pos):
+        global Old_Lantern_class
         self.index = self.index + 1 if (self.index + 1) < 25 else 1
 
         if self.app.is_day:
