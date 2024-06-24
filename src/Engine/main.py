@@ -42,7 +42,7 @@ class GraphicsEngine:
         self.time = 0
         self.delta_time = 0
         # color of the light
-        self.color = [(1, 1, 1), (0.145, 0.157, 0.314)]
+        self.color = [(1, 1, 1), (0.5, 1.0, 0.0)]
         # camera
         self.is_day = True
         self.camera = Camera(self)
