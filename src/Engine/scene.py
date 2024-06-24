@@ -69,9 +69,6 @@ class Scene:
 
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
-        else:
-            Old_Latern_class = fireFly(self.app, pos=(0, 3, 0))
-
 
         # Calcular la nueva posición alrededor de la cámara
         radius = 1
@@ -94,7 +91,8 @@ class Scene:
             self.add_object(self.old_lantern)
 
             self.old_lantern.render()
-
+        else:
+            self.app.moving_lamp.pos = self.app.position_lamp
 
         self.app.moving_cube.rot.xyz = self.app.time
 
