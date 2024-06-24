@@ -33,6 +33,11 @@ class VAO:
             vao_definitions.append((frame_name, 'default', frame_name))
             vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
 
+        for i in range(1, 15):
+            frame_name = f'Fox_{i}'
+            vao_definitions.append((frame_name, 'default', frame_name))
+            vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
+
 
         for vao_name, program_name, vbo_name in vao_definitions:
             self.vaos[vao_name] = self.get_vao(

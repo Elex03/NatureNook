@@ -1,5 +1,9 @@
 import glm
-import glm
+import random
+from model import *
+from light import Light
+from scene_renderer import SceneRenderer
+
 
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
@@ -154,15 +158,26 @@ class Trunk(ExtendedBaseModel):
 for i in range(1, 26):
     class_name = f'frame_{i}'
     vao_name = class_name
-    tex_id = 'frame_1'
 
-    def create_class(vao_name, tex_id):
+    def create_class(vao_name):
         return type(class_name, (ExtendedBaseModel,), {
-            '__init__': lambda self, app, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+            '__init__': lambda self, app, tex_id='frame_1', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
                 ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
         })
 
-    globals()[class_name] = create_class(vao_name, tex_id)
+    globals()[class_name] = create_class(vao_name)
+
+for i in range(1, 15):
+    class_name = f'Fox_{i}'
+    vao_name = class_name
+
+    def create_class(vao_name):
+        return type(class_name, (ExtendedBaseModel,), {
+            '__init__': lambda self, app, tex_id='Fox', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+                ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
+        })
+
+    globals()[class_name] = create_class(vao_name)
 
 
 class Leaves(ExtendedBaseModel):
@@ -200,7 +215,6 @@ class SkyBox(BaseModel):
         # mvp
         self.program['m_proj'].write(self.camera.m_proj)
         self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
-
 
 
 class AdvancedSkyBox(BaseModel):

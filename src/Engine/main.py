@@ -56,6 +56,9 @@ class GraphicsEngine:
         # scene
         self.var = True
         self.position_lamp = (0, 0, 0)
+        self.position_fox = [0, -1, 0]
+        self.rot_fox = 0
+        self.bool_fox = True
         self.scene = Scene(self)
         # renderer
         self.scene_renderer = SceneRenderer(self)

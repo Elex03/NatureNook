@@ -2,6 +2,7 @@ import numpy as np
 import moderngl as mgl
 import pywavefront
 
+
 class VBO:
     def __init__(self, ctx):
         self.vbos = {
@@ -18,6 +19,11 @@ class VBO:
         for i in range(1, 26):
             frame_name = f'frame_{i}'
             file_path = f'resources/models/source/ButterFly/frame_{i}.obj'
+            self.vbos[frame_name] = ModelVBO(ctx, file_path)
+
+        for i in range(1, 15):
+            frame_name = f'Fox_{i}'
+            file_path = f'resources/models/source/Fox/Fox_{i}.obj'
             self.vbos[frame_name] = ModelVBO(ctx, file_path)
 
     def destroy(self):

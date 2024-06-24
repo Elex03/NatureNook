@@ -10,7 +10,11 @@ class Scene:
         self.app = app
         self.objects = []
         self.index = 1  # Inicializa el índice de la animación
+        self.index2 = 10  # Inicializa el índice2 de la animación 2
+        self.index_Fox = 1
         self.old_lantern = None
+        self.second_lantern = None  # Añadido para la segunda linterna
+        self.Fox = None
         self.load()
         # skyBox
         self.skyBox = AdvancedSkyBox(app)
@@ -54,22 +58,34 @@ class Scene:
         else:
             for i in range(0, len(app.Position)):
                 add(Trunk(app, pos=(app.Position[i][0], -2, app.Position[i][1])))
-                add(Leaves(app, pos=(app.Position[i][0], -2, app.Position[i][1]), tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
+                add(Leaves(app, pos=(app.Position[i][0], -2, app.Position[i][1]),
+                           tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
 
         if self.app.is_day:
             # Añadir el primer frame de Old_Lantern
             Old_Lantern_class = globals()['frame_1']
-            self.old_lantern = Old_Lantern_class(app, pos=(0, 3, 0))
+            Old_Lantern_class1 = globals()['frame_1']
+            Fox = globals()['Fox_1']
+            self.old_lantern = Old_Lantern_class(app, pos=(0, 3, 0),  tex_id='frame_1')
+            self.old_lantern1 = Old_Lantern_class1(app, pos=(0, 3, 0), tex_id='frame_2')
+            self.Fox = Fox(app, pos=(0, 2, 0))
             add(self.old_lantern)
+            add(self.old_lantern1)
+            add(self.Fox)
+
         else:
             add(self.app.moving_lamp)
 
     def update(self, pos):
-        global Old_Lantern_class
+        global Old_Lantern_class, Old_Lantern_class1, Fox_animation
         self.index = self.index + 1 if (self.index + 1) < 25 else 1
+        self.index2 = self.index2 + 1 if (self.index2 + 1) < 25 else 1
+        self.index_Fox = self.index_Fox + 1 if (self.index_Fox + 1) < 15 else 1
 
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
+            Old_Lantern_class1 = globals()[f'frame_{self.index2}']
+            Fox_animation = globals()[f'Fox_{self.index_Fox}']
 
         # Calcular la nueva posición alrededor de la cámara
         radius = 1
@@ -86,16 +102,51 @@ class Scene:
         if self.app.is_day:
             if self.old_lantern is not None:
                 self.remove_object(self.old_lantern)
+            if self.second_lantern is not None:
+                self.remove_object(self.second_lantern)
+            if self.Fox is not None:
+                self.remove_object(self.Fox)
 
             # Crea y añade el nuevo objeto con la nueva posición
-            self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp)
+            self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp,  tex_id='frame_1')
+            self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2), tex_id='frame_2')
+
+            if self.app.bool_fox:
+                if self.app.position_fox[0] < 10:
+                    self.app.position_fox[0] += 0.2
+                    self.app.rot_fox = 280
+                else:
+                    if self.app.position_fox[2] < 10:
+                        self.app.position_fox[2] += 0.2
+                        self.app.rot_fox = 180
+                    else:
+                        self.app.bool_fox = False
+            else:
+                if (self.app.position_fox[0] - 0.2) > 0:
+                    self.app.position_fox[0] -= 0.2
+                    self.app.rot_fox = 90
+                else:
+                    if (self.app.position_fox[2] - 0.2) > 0:
+                        self.app.position_fox[2] -= 0.2
+                        self.app.rot_fox = 0
+                    else:
+                        self.app.bool_fox = True
+
+            self.Fox = Fox_animation(self.app, pos=self.app.position_fox, rot=(0, self.app.rot_fox, 0))
+
+
             self.add_object(self.old_lantern)
+            self.add_object(self.second_lantern)
+
+            self.add_object(self.Fox)
 
             self.old_lantern.render()
+            self.second_lantern.render()
+            self.Fox.render()
         else:
             self.app.moving_lamp.pos = self.app.position_lamp
 
-        self.app.moving_cube.rot.xyz = self.app.time
+        #   self.app.moving_cube.rot.xyz = self.app.time
 
         # Actualiza la lámpara móvil si es de noche
         if not self.app.is_day:
