@@ -2,6 +2,7 @@ import sys
 import pygame as pg
 import time
 from Slider import Slider
+from switch import Switch
 
 class Menu:
     def __init__(self, font, text_color, button_manager, background_img):
@@ -15,6 +16,9 @@ class Menu:
 
         # Initialize slider for audio settings
         self.volume_slider = Slider(150, 250, 500, 20, 0, 100, 50)
+
+        # Initialize switch for additional functionality
+        self.some_switch = Switch(360, 300, 60, 30)
 
     def draw_text(self, text, x, y):
         img = self.font.render(text, True, self.text_color)
@@ -31,6 +35,7 @@ class Menu:
             self.button_manager.draw_buttons(screen, self.menu_state)
             if self.menu_state == "audio":
                 self.volume_slider.draw(screen)
+                self.some_switch.draw(screen)
                 self.draw_text(f"Sound", 325, 190)
         pg.display.flip()
         return self.menu_state
@@ -62,6 +67,7 @@ class Menu:
         self.button_manager.handle_event(event, self.menu_state)
         if self.menu_state == "audio":
             self.volume_slider.handle_event(event)
+            self.some_switch.handle_event(event)
             # Set the volume of the sounds in your program
             volume = self.volume_slider.get_value() / 100
             pg.mixer.music.set_volume(volume)
