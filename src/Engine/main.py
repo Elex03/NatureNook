@@ -12,6 +12,7 @@ from scene_renderer import SceneRenderer
 pg.init()
 pg.mixer.init()
 
+
 class GraphicsEngine:
     def __init__(self, win_size=(840, 480)):
         # window size
@@ -97,6 +98,7 @@ class GraphicsEngine:
             self.scene.update(app.position_camera)
             self.render()
             self.delta_time = self.clock.tick(60)
+
 
 if __name__ == '__main__':
     app = GraphicsEngine()
