@@ -49,10 +49,12 @@ class Scene:
             n, s = 30, 5
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
+                    random_leaf = random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])
+                    random_trunk = "TrunkPine" if random_leaf == 'leaf4' else 'Trunk'
                     x_pos = x + random.uniform(0, 1)
                     z_pos = z + random.uniform(0, 2)
-                    add(Trunk(app, pos=(x_pos, -2, z_pos)))
-                    add(Leaves(app, pos=(x_pos, -2, z_pos), tex_id=random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])))
+                    add(Trunk(app, pos=(x_pos, -2, z_pos), tex_id=random_trunk))
+                    add(Leaves(app, pos=(x_pos, -2, z_pos), tex_id=random_leaf))
                     self.app.Position.append((x_pos, z_pos))
             self.app.var = False
         else:
