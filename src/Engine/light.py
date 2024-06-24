@@ -14,9 +14,9 @@ class Light:
         self.position = glm.vec3(position)
         self.direction = glm.vec3(0, 0, 0)
         # intensities
-        self.Ia = 0.2 * self.color if self.app.is_day else 0.2 * self.color
-        self.Id = 0.6 * self.color if self.app.is_day else 0.6 * self.color
-        self.Is = 1.2 * self.color if self.app.is_day else 1.2 * self.color
+        self.Ia = 0.2 * self.color if self.app.is_day else 0.1 * self.color
+        self.Id = 0.6 * self.color if self.app.is_day else 0.2 * self.color
+        self.Is = 1.2 * self.color if self.app.is_day else 0.4 * self.color
         # view matrix
         self.m_view_light = self.get_view_matrix()
         

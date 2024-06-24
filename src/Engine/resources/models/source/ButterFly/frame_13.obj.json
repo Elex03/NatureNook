@@ -1,0 +1,21 @@
+{
+  "created_at": "2024-06-23T17:13:14.190863",
+  "version": "0.1",
+  "mtllibs": [
+    "frame_13.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "BFly_Blue",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 503808
+    },
+    {
+      "material": "BLy_Orange",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 503808,
+      "byte_length": 503808
+    }
+  ]
+}

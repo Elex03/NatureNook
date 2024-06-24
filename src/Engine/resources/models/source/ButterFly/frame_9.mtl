@@ -1,0 +1,22 @@
+# Blender 4.1.1 MTL File: 'None'
+# www.blender.org
+
+newmtl BFly_Blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 1
+map_Kd C:/BFly_Blue_baseColor.png
+map_d C:/BFly_Blue_baseColor.png
+
+newmtl BLy_Orange
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 1
+map_Kd C:/BLy_Orange_baseColor.png
+map_d C:/BLy_Orange_baseColor.png

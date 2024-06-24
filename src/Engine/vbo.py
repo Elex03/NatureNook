@@ -2,17 +2,22 @@ import numpy as np
 import moderngl as mgl
 import pywavefront
 
-
 class VBO:
     def __init__(self, ctx):
-        self.vbos = {}
-        self.vbos['cube'] = CubeVBO(ctx)
-        self.vbos['trunk'] = TrunkVBO(ctx)
-        self.vbos['leaves'] = LeavesVBO(ctx)
-        self.vbos['Old_Lantern'] = Old_LanternVBO(ctx)
-        self.vbos['grass'] = GrassVBO(ctx)
-        self.vbos['skybox'] = SkyBoxVBO(ctx)
-        self.vbos['advanced_skybox'] = AdvancedSkyBoxVBO(ctx)
+        self.vbos = {
+            'cube': CubeVBO(ctx),
+            'trunk': ModelVBO(ctx, 'resources/models/source/Tree.obj'),
+            'leaves': ModelVBO(ctx, 'resources/models/source/Leaves.obj'),
+            'grass': ModelVBO(ctx, 'resources/models/source/grass.obj'),
+            'skybox': SkyBoxVBO(ctx),
+            'advanced_skybox': AdvancedSkyBoxVBO(ctx)
+        }
+
+        # Add 25 frames for the Old Lantern
+        for i in range(1, 26):
+            frame_name = f'frame_{i}'
+            file_path = f'resources/models/source/ButterFly/frame_{i}.obj'
+            self.vbos[frame_name] = ModelVBO(ctx, file_path)
 
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
@@ -22,10 +27,11 @@ class BaseVBO:
     def __init__(self, ctx):
         self.ctx = ctx
         self.vbo = self.get_vbo()
-        self.format: str = None
-        self.attribs: list = None
+        self.format = ''
+        self.attribs = []
 
-    def get_vertex_data(self): ...
+    def get_vertex_data(self):
+        pass
 
     def get_vbo(self):
         vertex_data = self.get_vertex_data()
@@ -65,7 +71,7 @@ class CubeVBO(BaseVBO):
                              (0, 1, 2), (2, 3, 0),
                              (2, 3, 0), (2, 0, 1),
                              (0, 2, 3), (0, 1, 2),
-                             (3, 1, 2), (3, 0, 1), ]
+                             (3, 1, 2), (3, 0, 1),]
         tex_coord_data = self.get_data(tex_coord_vertices, tex_coord_indices)
 
         normals = [(0, 0, 1) * 6,
@@ -73,7 +79,7 @@ class CubeVBO(BaseVBO):
                    (0, 0, -1) * 6,
                    (-1, 0, 0) * 6,
                    (0, 1, 0) * 6,
-                   (0, -1, 0) * 6, ]
+                   (0, -1, 0) * 6,]
         normals = np.array(normals, dtype='f4').reshape(36, 3)
 
         vertex_data = np.hstack([normals, vertex_data])
@@ -81,58 +87,19 @@ class CubeVBO(BaseVBO):
         return vertex_data
 
 
-class TrunkVBO(BaseVBO):
-    def __init__(self, app):
-        super().__init__(app)
+class ModelVBO(BaseVBO):
+    def __init__(self, ctx, filepath):
+        self.filepath = filepath
+        super().__init__(ctx)
         self.format = '2f 3f 3f'
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
     def get_vertex_data(self):
-        objs = pywavefront.Wavefront('resources/models/source/Tree.obj', cache=True, parse=True)
+        objs = pywavefront.Wavefront(self.filepath, cache=True, parse=True)
         obj = objs.materials.popitem()[1]
-        vertex_data = obj.vertices
-        vertex_data = np.array(vertex_data, dtype='f4')
+        vertex_data = np.array(obj.vertices, dtype='f4')
         return vertex_data
 
-
-class Old_LanternVBO(BaseVBO):
-    def __init__(self, app):
-        super().__init__(app)
-        self.format = '2f 3f 3f'
-        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
-
-    def get_vertex_data(self):
-        objs = pywavefront.Wavefront('resources/models/source/Old_Lampare.obj', cache=True, parse=True)
-        obj = objs.materials.popitem()[1]
-        vertex_data = obj.vertices
-        vertex_data = np.array(vertex_data, dtype='f4')
-        return vertex_data
-
-class LeavesVBO(BaseVBO):
-    def __init__(self, app):
-        super().__init__(app)
-        self.format = '2f 3f 3f'
-        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
-
-    def get_vertex_data(self):
-        objs = pywavefront.Wavefront('resources/models/source/Leaves.obj', cache=True, parse=True)
-        obj = objs.materials.popitem()[1]
-        vertex_data = obj.vertices
-        vertex_data = np.array(vertex_data, dtype='f4')
-        return vertex_data
-    
-class GrassVBO(BaseVBO):
-    def __init__(self, app):
-        super().__init__(app)
-        self.format = '2f 3f 3f'
-        self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
-
-    def get_vertex_data(self):
-        objs = pywavefront.Wavefront('resources/models/source/grass.obj', cache=True, parse=True)
-        obj = objs.materials.popitem()[1]
-        vertex_data = obj.vertices
-        vertex_data = np.array(vertex_data, dtype='f4')
-        return vertex_data
 
 class SkyBoxVBO(BaseVBO):
     def __init__(self, ctx):

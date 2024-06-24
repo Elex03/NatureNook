@@ -1,4 +1,5 @@
 import glm
+import glm
 
 class BaseModel:
     def __init__(self, app, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
@@ -110,7 +111,7 @@ class ExtendedBaseModel(BaseModel):
                 self.shadow_program['m_model'].write(self.m_model)
 
             self.program['u_texture_0'] = 0
-            if self._texture:
+            if (self._texture):
                 self._texture.use(location=0)
 
             self.program['m_proj'].write(self.camera.m_proj)
@@ -149,10 +150,19 @@ class Trunk(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
-class Old_Lantern(ExtendedBaseModel):
-    def __init__(self, app, vao_name='Old_Lantern', tex_id='Old_Lantern',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
-        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+# Crear clases para cada frame de Old_Lantern
+for i in range(1, 26):
+    class_name = f'frame_{i}'
+    vao_name = class_name
+    tex_id = 'frame_1'
+
+    def create_class(vao_name, tex_id):
+        return type(class_name, (ExtendedBaseModel,), {
+            '__init__': lambda self, app, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+                ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
+        })
+
+    globals()[class_name] = create_class(vao_name, tex_id)
 
 
 class Leaves(ExtendedBaseModel):
@@ -184,6 +194,7 @@ class SkyBox(BaseModel):
         # mvp
         self.program['m_proj'].write(self.camera.m_proj)
         self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
+
 
 
 class AdvancedSkyBox(BaseModel):
