@@ -9,6 +9,7 @@ class VBO:
             'trunk': ModelVBO(ctx, 'resources/models/source/Tree.obj'),
             'leaves': ModelVBO(ctx, 'resources/models/source/Leaves.obj'),
             'grass': ModelVBO(ctx, 'resources/models/source/grass.obj'),
+            'fireFly': ModelVBO(ctx, 'resources/models/source/fireFly.obj'),
             'skybox': SkyBoxVBO(ctx),
             'advanced_skybox': AdvancedSkyBoxVBO(ctx)
         }

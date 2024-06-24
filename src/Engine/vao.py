@@ -22,6 +22,8 @@ class VAO:
             ('shadow_leaves', 'shadow_map', 'leaves'),
             ('grass', 'default', 'grass'),
             ('shadow_grass', 'shadow_map', 'grass'),
+            ('fireFly', 'default', 'fireFly'),
+            ('shadow_fireFly', 'shadow_map', 'fireFly'),
             ('skybox', 'skybox', 'skybox'),
             ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
         ]

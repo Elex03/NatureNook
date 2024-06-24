@@ -11,6 +11,7 @@ class Texture:
             0: self.get_texture(path='resources/models/textures/grass1.jpg'),
             'trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
             'frame_1': self.get_texture(path='resources/models/textures/BFBlue.png'),
+            'fireFly': self.get_texture(path='resources/models/textures/fireFly.png'),
             'leaf1': self.get_texture(path='resources/models/textures/Leaf_Duglas.jpg'),
             'leaf2': self.get_texture(path='resources/models/textures/leaf_Pine.jpg'),
             'leaf3': self.get_texture(path='resources/models/textures/leaf_Sakura.jpg'),
