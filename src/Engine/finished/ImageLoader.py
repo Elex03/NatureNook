@@ -11,3 +11,4 @@ class ImageLoader:
     def load_background(self, filename, win_size):
         img = pg.image.load(os.path.join(self.img_folder, filename)).convert()
         return pg.transform.scale(img, win_size)
+
