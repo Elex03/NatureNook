@@ -14,12 +14,12 @@ class Switch:
     def draw(self, screen):
         if self.state:
             pg.draw.rect(screen, self.on_color, self.rect)
-            pg.draw.circle(screen, self.knob_color, self.rect.midright, self.rect.height // 2)
-            screen.blit(self.on_text, (self.rect.x + 10, self.rect.y + 5))
+            pg.draw.circle(screen, self.knob_color, self.rect.midright, self.rect.height // 2.7)
+            screen.blit(self.on_text, (self.rect.x + 17, self.rect.y + 7))
         else:
             pg.draw.rect(screen, self.off_color, self.rect)
-            pg.draw.circle(screen, self.knob_color, self.rect.midleft, self.rect.height // 2)
-            screen.blit(self.off_text, (self.rect.x + 10, self.rect.y + 5))
+            pg.draw.circle(screen, self.knob_color, self.rect.midleft, self.rect.height // 2.9)
+            screen.blit(self.off_text, (self.rect.x + 15, self.rect.y + 7))
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
