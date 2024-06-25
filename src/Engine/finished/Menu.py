@@ -80,7 +80,7 @@ class Menu:
             # Set the volume of the sounds in your program
             volume = self.volume_slider.get_value() / 100
             pg.mixer.music.set_volume(volume)
-            print(f"Volume: {self.volume_slider.get_value()}%")
+
 
     def adjust_volume_continuously(self):
         keys = pg.key.get_pressed()
@@ -89,9 +89,9 @@ class Menu:
                 self.volume_slider.adjust_value(-1)
                 volume = self.volume_slider.get_value() / 100
                 pg.mixer.music.set_volume(volume)
-                print(f"Sound: {self.volume_slider.get_value()}%")
+
             if keys[pg.K_d]:
                 self.volume_slider.adjust_value(1)
                 volume = self.volume_slider.get_value() / 100
                 pg.mixer.music.set_volume(volume)
-                print(f"Sound: {self.volume_slider.get_value()}%")
+

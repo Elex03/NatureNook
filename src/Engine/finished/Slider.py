@@ -8,6 +8,7 @@ class Slider:
         self.max_val = max_val
         self.val = start_val
         self.sliding = False
+        self.sound_updated = False  # Variable para controlar si se ha impreso el mensaje de actualización del sonido
 
     def draw(self, surface):
         # Calculate the position and dimensions for the filled part of the slider
@@ -36,7 +37,11 @@ class Slider:
         if event.type == pg.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 self.sliding = True
+                self.sound_updated = False
         elif event.type == pg.MOUSEBUTTONUP:
+            if self.sliding and not self.sound_updated:
+                print("Sound:", int(self.val))
+                self.sound_updated = True
             self.sliding = False
         elif event.type == pg.MOUSEMOTION:
             if self.sliding:
@@ -44,9 +49,17 @@ class Slider:
                 self.val = (rel_x / self.rect.w) * (self.max_val - self.min_val) + self.min_val
                 self.val = max(self.min_val, min(self.max_val, self.val))
 
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_a:
+                self.adjust_value(-1)
+            elif event.key == pg.K_d:
+                self.adjust_value(1)
+
     def get_value(self):
         return self.val
 
     def adjust_value(self, amount):
         self.val += amount
         self.val = max(self.min_val, min(self.max_val, self.val))
+        print("Sound:",
+              int(self.val))
