@@ -1,4 +1,3 @@
-
 import sys
 import pygame as pg
 import time
@@ -34,12 +33,16 @@ class Menu:
             self.draw_text("Press SPACE to pause", 160, 250)
         else:
             self.button_manager.draw_buttons(screen, self.menu_state)
-            if self.menu_state == "audio":
+            if self.menu_state == "resume":
+                self.volume_slider.draw(screen)
+                self.some_switch.draw(screen)
+                self.draw_text(f"Sound", 325, 190)
+            elif self.menu_state == "audio":
                 self.volume_slider.draw(screen)
                 self.some_switch.draw(screen)
                 self.draw_text(f"Sound", 325, 190)
         pg.display.flip()
-        return self.menu_state
+
 
     def handle_selection(self, input_type='keyboard'):
         if input_type == 'mouse':
@@ -48,9 +51,9 @@ class Menu:
             selected_button = self.button_manager.get_selected_button(self.menu_state)
 
         if selected_button == "resume":
-            self.menu_state = "options"
+            self.menu_state = "resume"
         elif selected_button == "options":
-            return "options"
+            self.open_new_window()
         elif selected_button == "quit":
             pg.quit()
             sys.exit()
@@ -64,9 +67,13 @@ class Menu:
             self.menu_state = "main"
         return "main"
 
+    def open_new_window(self):
+        # Aquí metes los creditos que hace la halley lo tiene q saber implementar
+        print("Nueva ventana abierta")
+
     def handle_event(self, event):
         self.button_manager.handle_event(event, self.menu_state)
-        if self.menu_state == "audio":
+        if self.menu_state == "resume" or self.menu_state == "audio":
             self.volume_slider.handle_event(event)
             self.some_switch.handle_event(event)
             # Set the volume of the sounds in your program
@@ -76,7 +83,7 @@ class Menu:
 
     def adjust_volume_continuously(self):
         keys = pg.key.get_pressed()
-        if self.menu_state == "audio":
+        if self.menu_state == "resume" or self.menu_state == "audio":
             if keys[pg.K_a]:
                 self.volume_slider.adjust_value(-1)
                 volume = self.volume_slider.get_value() / 100
