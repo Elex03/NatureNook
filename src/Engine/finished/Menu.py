@@ -43,6 +43,7 @@ class Menu:
                 self.draw_text(f"Sound", 325, 190)
         pg.display.flip()
 
+       # return self.menu_state
 
     def handle_selection(self, input_type='keyboard'):
         if input_type == 'mouse':

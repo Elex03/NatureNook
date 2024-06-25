@@ -1,5 +1,6 @@
 import pygame as pg
 
+
 class Slider:
     def __init__(self, x, y, w, h, min_val, max_val, start_val):
         self.rect = pg.Rect(x, y, w, h)
@@ -9,14 +10,19 @@ class Slider:
         self.sliding = False
 
     def draw(self, surface):
-        # Draw the slider background
-        pg.draw.rect(surface, (255, 255, 255), self.rect)
-        # Draw the filled part of the slider
-        filled_rect = pg.Rect(self.rect.x, self.rect.y, (self.val - self.min_val) / (self.max_val - self.min_val) * self.rect.w, self.rect.h)
-        pg.draw.rect(surface, (0, 255, 255), filled_rect)
+        # Draw the slider line
+        line_y = self.rect.y + self.rect.h // 2
+        pg.draw.line(surface, (0, 0, 255), (self.rect.x, line_y), (self.rect.x + self.rect.w, line_y), 5)
+
         # Draw the slider knob
         knob_x = self.rect.x + (self.val - self.min_val) / (self.max_val - self.min_val) * self.rect.w
-        pg.draw.circle(surface, (0, 0, 0), (int(knob_x), self.rect.centery), self.rect.h // 2)
+        outer_radius = self.rect.h // 2
+        inner_radius = outer_radius - 4
+
+        # Draw outer white circle
+        pg.draw.circle(surface, (255, 255, 255), (int(knob_x), line_y), outer_radius)
+        # Draw inner blue circle
+        pg.draw.circle(surface, (0, 0, 255), (int(knob_x), line_y), inner_radius)
 
         # Draw the percentage text
         font = pg.font.SysFont("arialblack", 20)
