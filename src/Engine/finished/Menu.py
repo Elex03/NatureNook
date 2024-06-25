@@ -1,3 +1,4 @@
+
 import sys
 import pygame as pg
 import time
@@ -47,9 +48,9 @@ class Menu:
             selected_button = self.button_manager.get_selected_button(self.menu_state)
 
         if selected_button == "resume":
-            return "resume"
-        elif selected_button == "options":
             self.menu_state = "options"
+        elif selected_button == "options":
+            return "options"
         elif selected_button == "quit":
             pg.quit()
             sys.exit()
