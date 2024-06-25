@@ -177,6 +177,18 @@ for i in range(1, 15):
                 ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
         })
 
+
+    globals()[class_name] = create_class(vao_name)
+for i in range(1, 104):
+    class_name = f'Bird_{i}'
+    vao_name = class_name
+
+    def create_class(vao_name):
+        return type(class_name, (ExtendedBaseModel,), {
+            '__init__': lambda self, app, tex_id='bird', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+                ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
+        })
+
     globals()[class_name] = create_class(vao_name)
 
 
@@ -194,6 +206,12 @@ class Grass(ExtendedBaseModel):
 
 class fireFly(ExtendedBaseModel):
     def __init__(self, app, vao_name='fireFly', tex_id='fireFly',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
+class rock(ExtendedBaseModel):
+    def __init__(self, app, vao_name='rock', tex_id='rock',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 

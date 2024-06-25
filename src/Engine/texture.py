@@ -13,6 +13,8 @@ class Texture:
             'TrunkSakura': self.get_texture(path='resources/models/textures/TrunkSakura.jpg'),
             'Trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
             'TrunkPine': self.get_texture(path='resources/models/textures/TrunkPine.jpg'),
+            'rock': self.get_texture(path='resources/models/textures/rock.png'),
+            'bird': self.get_texture(path='resources/models/textures/Bird.png'),
             'fireFly': self.get_texture(path='resources/models/textures/fireFly.png'),
             'Fox': self.get_texture(path='resources/models/textures/Fox.png'),
             'frame_1': self.get_texture(path='resources/models/textures/BFBlue.png'),

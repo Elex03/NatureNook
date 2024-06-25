@@ -24,6 +24,8 @@ class VAO:
             ('shadow_grass', 'shadow_map', 'grass'),
             ('fireFly', 'default', 'fireFly'),
             ('shadow_fireFly', 'shadow_map', 'fireFly'),
+            ('rock', 'default', 'rock'),
+            ('shadow_rock', 'shadow_map', 'rock'),
             ('skybox', 'skybox', 'skybox'),
             ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
         ]
@@ -38,6 +40,10 @@ class VAO:
             vao_definitions.append((frame_name, 'default', frame_name))
             vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
 
+        for i in range(1, 104):
+            frame_name = f'Bird_{i}'
+            vao_definitions.append((frame_name, 'default', frame_name))
+            vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
 
         for vao_name, program_name, vbo_name in vao_definitions:
             self.vaos[vao_name] = self.get_vao(

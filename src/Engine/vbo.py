@@ -11,6 +11,7 @@ class VBO:
             'leaves': ModelVBO(ctx, 'resources/models/source/Leaves.obj'),
             'grass': ModelVBO(ctx, 'resources/models/source/grass.obj'),
             'fireFly': ModelVBO(ctx, 'resources/models/source/fireFly.obj'),
+            'rock': ModelVBO(ctx, 'resources/models/source/rock.obj'),
             'skybox': SkyBoxVBO(ctx),
             'advanced_skybox': AdvancedSkyBoxVBO(ctx)
         }
@@ -24,6 +25,11 @@ class VBO:
         for i in range(1, 15):
             frame_name = f'Fox_{i}'
             file_path = f'resources/models/source/Fox/Fox_{i}.obj'
+            self.vbos[frame_name] = ModelVBO(ctx, file_path)
+
+        for i in range(1, 104):
+            frame_name = f'Bird_{i}'
+            file_path = f'resources/models/source/Bird/Bird_{i}.obj'
             self.vbos[frame_name] = ModelVBO(ctx, file_path)
 
     def destroy(self):

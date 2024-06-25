@@ -57,6 +57,7 @@ class GraphicsEngine:
         self.var = True
         self.position_lamp = (0, 0, 0)
         self.position_fox = [0, -1, 0]
+        self.position_grass = []
         self.rot_fox = 0
         self.bool_fox = True
         self.scene = Scene(self)
