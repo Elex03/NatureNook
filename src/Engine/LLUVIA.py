@@ -7,14 +7,14 @@ import time
 
 # Inicializar Pygame y OpenGL
 pygame.init()
-display = (800, 600)
+display = (840, 480)
 pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 gluOrtho2D(0, display[0], 0, display[1])
 
 # Configuración del texto
-font = pygame.font.SysFont("Arial", 32)
-credits = "NATURENOOK"
-text_speed = 0.05  # Velocidad a la que se imprimen los caracteres (en segundos)
+font = pygame.font.SysFont("Calibri", 18)
+credits = "Para disfrutar al máximo de tu experiencia, te recomendamos utilizar un mando y auriculares."
+text_speed = 0.02  # Velocidad a la que se imprimen los caracteres (en segundos)
 current_text = ""
 
 def render_text(text, x, y):
@@ -44,7 +44,7 @@ def main():
             last_update = time.time()
 
         # Renderizar el texto
-        render_text(current_text, 300, y)
+        render_text(current_text, 70, 30)
 
         pygame.display.flip()
         pygame.time.wait(10)
