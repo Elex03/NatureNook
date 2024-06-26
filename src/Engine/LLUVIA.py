@@ -1,8 +1,7 @@
 import pygame
-from OpenGL.raw.GLU import gluOrtho2D
-from pygame.locals import *
 from OpenGL.GL import *
-from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from pygame.locals import *
 
 # Inicializa Pygame y configura la ventana
 pygame.init()
@@ -21,10 +20,11 @@ glLoadIdentity()
 
 # Definir el texto de los créditos
 credits = [
-    "Creditos",
-    "Desarrollado por:",
-    "Ordoñez Ana",
-    "Rugama Halley",
+    "NATURENOOK",
+    "Descripción",
+    "Ana Ordoñez",
+    "Halley Rugama:"
+    "sonidos y animaciones",
     "Acuña Matuz",
     "Salguera Benjamin"
 ]
@@ -37,11 +37,47 @@ def render_text(text, pos, font_size=24, color=(255, 255, 255)):
     glRasterPos2d(pos[0], pos[1])
     glDrawPixels(text_surface.get_width(), text_surface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
 
+# Cargar imagen y crear textura
+def load_texture(image_path):
+    image = pygame.image.load(image_path)
+    image = pygame.transform.flip(image, True, False)
+    image_data = pygame.image.tostring(image, "RGBA", True)
+    width, height = image.get_size()
+
+    texture_id = glGenTextures(1)
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
+
+    return texture_id, width, height
+
+# Renderizar textura
+def render_texture(texture_id, pos, size):
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+    glEnable(GL_TEXTURE_2D)
+    glBegin(GL_QUADS)
+    glTexCoord2f(0, 0)
+    glVertex2f(pos[0], pos[1])
+    glTexCoord2f(1, 0)
+    glVertex2f(pos[0] + size[0], pos[1])
+    glTexCoord2f(1, 1)
+    glVertex2f(pos[0] + size[0], pos[1] + size[1])
+    glTexCoord2f(0, 1)
+    glVertex2f(pos[0], pos[1] + size[1])
+    glEnd()
+    glDisable(GL_TEXTURE_2D)
+
 # Función principal de renderizado
 def main():
     clock = pygame.time.Clock()
     running = True
     y_offset = display[1]
+
+    # Cargar imagen de prueba
+    texture_id, width, height = load_texture("halley2.png")
 
     while running:
         for event in pygame.event.get():
@@ -54,6 +90,10 @@ def main():
         for line in credits:
             render_text(line, (display[0] // 2 - 100, y))
             y -= 50  # Espacio entre líneas
+
+        # Renderizar imagen con nuevo tamaño
+        new_size = (80, 80)  # Nuevo tamaño de la imagen
+        render_texture(texture_id, (display[0] // 2 + 180 + new_size[0] // 2, y +120), new_size)
 
         y_offset -= 1  # Mueve el texto hacia arriba
 
