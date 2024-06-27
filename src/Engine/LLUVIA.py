@@ -23,7 +23,7 @@ credits = [
     "NATURENOOK",
     "Descripción",
     "Ana Ordoñez",
-    "Halley Rugama:"
+    "Halley Rugama:",
     "sonidos y animaciones",
     "Acuña Matuz",
     "Salguera Benjamin"
@@ -76,8 +76,9 @@ def main():
     running = True
     y_offset = display[1]
 
-    # Cargar imagen de prueba
-    texture_id, width, height = load_texture("halley2.png")
+    # Cargar imágenes de prueba
+    texture_paths = ["halley2.png", "SOFI.png", "eliezer.png", "benja.png"]
+    textures = [load_texture(path) for path in texture_paths]
 
     while running:
         for event in pygame.event.get():
@@ -91,13 +92,15 @@ def main():
             render_text(line, (display[0] // 2 - 100, y))
             y -= 50  # Espacio entre líneas
 
-        # Renderizar imagen con nuevo tamaño
-        new_size = (80, 80)  # Nuevo tamaño de la imagen
-        render_texture(texture_id, (display[0] // 2 + 180 + new_size[0] // 2, y +120), new_size)
+        # Renderizar imágenes en diferentes posiciones
+        positions = [(700, y + 200), (700, y + 300), (700, y + 400), (700, y + 100)]
+        size = (80, 80)  # Tamaño de las imágenes
+        for (texture_id, width, height), pos in zip(textures, positions):
+            render_texture(texture_id, pos, size)
 
         y_offset -= 1  # Mueve el texto hacia arriba
 
-        if y_offset < -len(credits) * 30:
+        if y_offset < -len(credits) * 50:
             y_offset = display[1]
 
         pygame.display.flip()
