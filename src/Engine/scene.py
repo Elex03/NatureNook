@@ -16,6 +16,7 @@ class Scene:
         self.index_Bird = 1
         self.old_lantern = None
         self.Rain = None
+        self.waterSplash = None
         self.second_lantern = None  # Añadido para la segunda linterna
         self.Fox = None
         n = 10
@@ -42,7 +43,7 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(rock(app, pos=(0, -1, 0)))
+        add(rock(app, pos=(0, 0, 0)))
 
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
@@ -177,21 +178,6 @@ class Scene:
             Scene(self.app)
             # Recargar renderer
             SceneRenderer(self.app)
-        else:
-            radius = 50
-            time = self.app.time % (2 * math.pi)
-            if time > math.pi:
-                time = 2 * math.pi - time
-
-
-            # Calcula las nuevas posiciones
-            new_z = radius * glm.cos(time)
-            new_y = radius * glm.sin(time)
-
-            self.app.light = Light(self.app, False, [0, new_y, new_z])
-            Scene(self.app)
-            # Recargar renderer
-            SceneRenderer(self.app)
 
     def rain(self):
         add = self.add_object
@@ -201,6 +187,10 @@ class Scene:
             if item['y_rain'] > 0:
                 item['y_rain'] = item['y_rain'] - 0.3
             else:
+                if self.waterSplash is not None:
+                    self.remove_object(self.waterSplash)
+                self.waterSplash = WaterSplash(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
+                add(self.waterSplash)
                 item['y_rain'] = random.uniform(10, 5)
 
 
