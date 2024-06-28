@@ -26,6 +26,8 @@ class VAO:
             ('shadow_fireFly', 'shadow_map', 'fireFly'),
             ('rock', 'default', 'rock'),
             ('shadow_rock', 'shadow_map', 'rock'),
+            ('water', 'default', 'water'),
+            ('shadow_water', 'shadow_map', 'water'),
             ('skybox', 'skybox', 'skybox'),
             ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
         ]

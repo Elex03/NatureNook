@@ -1,0 +1,21 @@
+{
+  "created_at": "2024-06-27T00:34:14.874944",
+  "version": "0.1",
+  "mtllibs": [
+    "house.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "Krisha",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 576
+    },
+    {
+      "material": "Lavo4ka",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 576,
+      "byte_length": 17280
+    }
+  ]
+}

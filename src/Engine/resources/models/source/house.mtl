@@ -1,0 +1,22 @@
+# Blender 4.1.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Krisha
+Ns 333.418823
+Ka 0.056212 0.056212 0.056212
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd C:/Krisha_baseColor.jpeg
+
+newmtl Lavo4ka
+Ns 46.878799
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.002963 0.001308 0.000258
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Krisha_baseColor.jpeg

@@ -14,9 +14,12 @@ class Scene:
         self.index_Fox = 1
         self.index_Bird = 1
         self.old_lantern = None
+        self.rain = None
         self.second_lantern = None  # Añadido para la segunda linterna
         self.Fox = None
         self.bird = None
+        self.y_rain = 20
+
         self.load()
         # skyBox
         self.skyBox = AdvancedSkyBox(app)
@@ -39,6 +42,7 @@ class Scene:
                 add(Cube(app, pos=(x, -s, z)))
 
         add(rock(app, pos=(0, -1, 0)))
+
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
             self.app.moving_lamp = fireFly(app, pos=self.app.position_lamp, scale=(1, 1, 1))
@@ -97,7 +101,7 @@ class Scene:
         self.index2 = self.index2 + 1 if (self.index2 + 1) < 25 else 1
         self.index_Fox = self.index_Fox + 1 if (self.index_Fox + 1) < 15 else 1
         self.index_Bird = self.index_Bird + 1 if (self.index_Bird + 1) < 104 else 1
-
+        self.Rain()
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
             Old_Lantern_class1 = globals()[f'frame_{self.index2}']
@@ -172,3 +176,11 @@ class Scene:
             Scene(self.app)
             # Recargar renderer
             SceneRenderer(self.app)
+    def Rain(self):
+        self.y_rain = self.y_rain - 1 if self.y_rain > 0 else 20
+        add = self.add_object
+        if self.rain is not None:
+            self.remove_object(self.rain)
+
+        self.rain = Water(self.app, pos=(0, self.y_rain, 0))
+        add(self.rain)

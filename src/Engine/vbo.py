@@ -9,6 +9,7 @@ class VBO:
             'cube': CubeVBO(ctx),
             'trunk': ModelVBO(ctx, 'resources/models/source/Tree.obj'),
             'leaves': ModelVBO(ctx, 'resources/models/source/Leaves.obj'),
+            'water': ModelVBO(ctx, 'resources/models/source/water.obj'),
             'grass': ModelVBO(ctx, 'resources/models/source/grass.obj'),
             'fireFly': ModelVBO(ctx, 'resources/models/source/fireFly.obj'),
             'rock': ModelVBO(ctx, 'resources/models/source/rock.obj'),

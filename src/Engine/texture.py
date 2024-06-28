@@ -12,6 +12,7 @@ class Texture:
             'trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
             'TrunkSakura': self.get_texture(path='resources/models/textures/TrunkSakura.jpg'),
             'Trunk': self.get_texture(path='resources/models/textures/Trunk.jpg'),
+            'water': self.get_texture(path='resources/models/textures/water.jpg'),
             'TrunkPine': self.get_texture(path='resources/models/textures/TrunkPine.jpg'),
             'rock': self.get_texture(path='resources/models/textures/rock.png'),
             'bird': self.get_texture(path='resources/models/textures/Bird.png'),
