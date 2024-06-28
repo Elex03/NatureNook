@@ -12,11 +12,11 @@ class EventChecker:
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-            #if event.type == pg.KEYDOWN:
+            if event.type == pg.KEYDOWN:
 
-              #  if event.key == pg.K_ESCAPE:
-               #     pg.quit()
-               #     sys.exit()
+                if event.key == pg.K_ESCAPE:
+                    pg.quit()
+                    sys.exit()
                 if event.key == pg.K_SPACE:
                     self.engine.game_paused = not self.engine.game_paused
                     self.engine.set_mode()
