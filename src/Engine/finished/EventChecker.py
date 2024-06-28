@@ -13,12 +13,12 @@ class EventChecker:
                 pg.quit()
                 sys.exit()
             if event.type == pg.KEYDOWN:
-
                 if event.key == pg.K_ESCAPE:
                     pg.quit()
                     sys.exit()
-                if event.key == pg.K_SPACE:
+                if event.key == pg.K_p:  # Pause the game with "P"
                     self.engine.game_paused = not self.engine.game_paused
+                    self.menu.menu_state = "audio" if self.engine.game_paused else "main"
                     self.engine.set_mode()
                 if event.key == pg.K_w:
                     self.menu.button_manager.move_selection_up(self.menu.menu_state)

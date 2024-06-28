@@ -10,10 +10,10 @@ class GraphicEngine:
     def __init__(self, win_size=(800, 600)):
         pg.init()
         self.WIN_SIZE = win_size
-        self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
-        self.ctx = mgl.create_context()
+        self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)  # Comenzar en modo menú
+        self.ctx = None  # Inicializar el contexto de OpenGL como None
         self.clock = pg.time.Clock()
-        self.game_paused = True
+        self.game_paused = True  # Comenzar en modo pausa (menú)
 
         # Initialize ImageLoader
         img_folder = r'botton/'
@@ -33,24 +33,40 @@ class GraphicEngine:
         # Initialize EventChecker
         self.event_checker = EventChecker(self.menu, self.button_manager, self)
 
-        self.set_mode()
+        # Create a transparent surface for the pause overlay
+        self.overlay_surface = pg.Surface(self.WIN_SIZE, pg.SRCALPHA)
 
     def set_mode(self):
         if self.game_paused:
             self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)
         else:
             self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+            if not self.ctx:
+                self.ctx = mgl.create_context()
 
     def render(self):
-        self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
-        pg.display.flip()
+        if self.ctx:
+            self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
+            pg.display.flip()
+        else:
+            self.screen.fill((0, 0, 0))  # Clear the screen with black
+            # Add any other rendering logic here if necessary
+            if not self.game_paused:
+                # Draw the game scene here
+                self.screen.fill((0, 0, 0))  # This would be your game rendering logic
 
     def run(self):
         while True:
             self.event_checker.check_events()  # Use EventChecker to handle events
-            self.menu.adjust_volume_continuously()  # Adjust volume continuously based on key presses
             if self.game_paused:
+                # Render the game scene
+                self.render()
+                # Fill the overlay with a semi-transparent color
+                self.overlay_surface.fill((0, 0, 0, 128))
+                self.screen.blit(self.overlay_surface, (0, 0))
+                # Draw the menu on top
                 action = self.menu.draw_menu()
+                self.menu.adjust_volume_continuously()  # Continuously adjust volume
                 if action == "resume":
                     self.game_paused = False
                     self.set_mode()
