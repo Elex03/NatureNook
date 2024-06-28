@@ -204,6 +204,12 @@ class Water(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
+class WaterSplash(ExtendedBaseModel):
+    def __init__(self, app, vao_name='waterSplash', tex_id='water',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
 class Grass(ExtendedBaseModel):
     def __init__(self, app, vao_name='grass', tex_id='grass',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):

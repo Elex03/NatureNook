@@ -7,7 +7,7 @@ from control import Control
 
 FOV = 50  # deg
 NEAR = 0.1
-FAR = 100
+FAR = 200
 SPEED = 0.010
 SENSITIVITY = 0.08
 

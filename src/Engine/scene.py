@@ -3,6 +3,7 @@ import glm
 import random
 from light import Light
 from scene_renderer import SceneRenderer
+import math
 
 
 class Scene:
@@ -101,7 +102,7 @@ class Scene:
         self.index2 = self.index2 + 1 if (self.index2 + 1) < 25 else 1
         self.index_Fox = self.index_Fox + 1 if (self.index_Fox + 1) < 15 else 1
         self.index_Bird = self.index_Bird + 1 if (self.index_Bird + 1) < 104 else 1
-        self.rain()
+        # self.rain()
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
             Old_Lantern_class1 = globals()[f'frame_{self.index2}']
@@ -109,7 +110,7 @@ class Scene:
             Bird_animation = globals()[f'Bird_{self.index_Bird}']
 
         # Calcular la nueva posición alrededor de la cámara
-        radius = 1
+        radius = 1.5
         wave_amplitude = 0.5
         wave_frequency = 1
         offset = 1.5
@@ -176,13 +177,32 @@ class Scene:
             Scene(self.app)
             # Recargar renderer
             SceneRenderer(self.app)
+        else:
+            radius = 50
+            time = self.app.time % (2 * math.pi)
+            if time > math.pi:
+                time = 2 * math.pi - time
+
+
+            # Calcula las nuevas posiciones
+            new_z = radius * glm.cos(time)
+            new_y = radius * glm.sin(time)
+
+            self.app.light = Light(self.app, False, [0, new_y, new_z])
+            Scene(self.app)
+            # Recargar renderer
+            SceneRenderer(self.app)
 
     def rain(self):
         add = self.add_object
 
         for item in self.array:
             # Aplicar las operaciones específicas para cada elemento
-            item['y_rain'] = item['y_rain'] - 0.3 if item['y_rain'] > 0 else random.uniform(10, 5)
+            if item['y_rain'] > 0:
+                item['y_rain'] = item['y_rain'] - 0.3
+            else:
+                item['y_rain'] = random.uniform(10, 5)
+
 
             # Suponer que tenemos métodos y atributos definidos para self.app y Water
 

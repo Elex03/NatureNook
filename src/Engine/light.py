@@ -5,7 +5,7 @@ class Light:
     def __init__(self, app, toUse, pos):
         self.app = app
         if toUse:
-            self.light((50, 50, 0))
+            self.light((10, 50, 20))
         else:
             self.light(pos)
 

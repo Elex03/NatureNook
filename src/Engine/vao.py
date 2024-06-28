@@ -28,6 +28,8 @@ class VAO:
             ('shadow_rock', 'shadow_map', 'rock'),
             ('water', 'default', 'water'),
             ('shadow_water', 'shadow_map', 'water'),
+            ('waterSplash', 'default', 'waterSplash'),
+            ('shadow_waterSplash', 'shadow_map', 'waterSplash'),
             ('skybox', 'skybox', 'skybox'),
             ('advanced_skybox', 'advanced_skybox', 'advanced_skybox'),
         ]
