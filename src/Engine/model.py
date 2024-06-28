@@ -190,13 +190,23 @@ for i in range(1, 104):
         })
 
     globals()[class_name] = create_class(vao_name)
+for i in range(1, 109):
+    class_name = f'deer_({i})'
+    vao_name = class_name
+
+    def create_class(vao_name):
+        return type(class_name, (ExtendedBaseModel,), {
+            '__init__': lambda self, app, tex_id='deer', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+                ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
+        })
+
+    globals()[class_name] = create_class(vao_name)
 
 
 class Leaves(ExtendedBaseModel):
     def __init__(self, app, vao_name='leaves', tex_id='leaves1',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
-
 
 class Water(ExtendedBaseModel):
     def __init__(self, app, vao_name='water', tex_id='water',

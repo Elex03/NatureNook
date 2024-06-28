@@ -26,6 +26,8 @@ class VAO:
             ('shadow_fireFly', 'shadow_map', 'fireFly'),
             ('rock', 'default', 'rock'),
             ('shadow_rock', 'shadow_map', 'rock'),
+            ('deer', 'default', 'deer'),
+            ('shadow_deer', 'shadow_map', 'deer'),
             ('water', 'default', 'water'),
             ('shadow_water', 'shadow_map', 'water'),
             ('waterSplash', 'default', 'waterSplash'),
@@ -46,6 +48,11 @@ class VAO:
 
         for i in range(1, 104):
             frame_name = f'Bird_{i}'
+            vao_definitions.append((frame_name, 'default', frame_name))
+            vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
+
+        for i in range(1, 109):
+            frame_name = f'deer_({i})'
             vao_definitions.append((frame_name, 'default', frame_name))
             vao_definitions.append((f'shadow_{frame_name}', 'shadow_map', frame_name))
 
