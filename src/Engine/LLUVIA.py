@@ -21,12 +21,48 @@ glLoadIdentity()
 # Definir el texto de los créditos
 credits = [
     "NATURENOOK",
-    "Descripción",
-    "Ana Ordoñez",
+    "Description:",
+    "In today's technological and urban era,many people suffer from",
+    "stress and anxiety due to constant exposure to devices electronics",
+    "and the noise of the city.This generates a disconnection,"
+    "with nature, ",
+    "making it difficult to find moments of calm. Therefore, there is a",
+    "growing need for virtual spaces that,"
+    "offer a refuge in natural environments, ",
+    "allowing you to relax,"
+    "rejuvenate and reconnect with the environment.",
+    "-------------------------------",
+    "Developers: ",
+    "__________________",
+    "Ana Ordoñez:",
+    "Role: Responsible for the User Interface (UI)",
+    "Responsibilities:",
+    "Design and creation of interactive menus.",
+    "Implementation of events and actions",
+    "associated with buttons.",
+    "__________________",
     "Halley Rugama:",
-    "sonidos y animaciones",
-    "Acuña Matuz",
-    "Salguera Benjamin"
+    "Role: Responsible for the Import of Models and Sound",
+    "Responsibilities:",
+    "Import and adjustment of models in .obj format. ",
+    "Implementation of proximity sound for animals.",
+    "8D ambient sound integration.",
+    "__________________",
+    "Eliezer Acuña",
+    "Role: Person in charge of the collision and animation",
+    " of models",
+    "Responsibilities:",
+    "Management and optimization of the collision ",
+    "between models.",
+    "Development and improvement of ",
+    "animations for models.",
+    "___________________",
+    "Benjamin Salguera:",
+    "Role: Head of Lighting and Support in User Interface.",
+    "Responsibilities:",
+    "Application and adjustment of lighting in scenes.",
+    "Collaboration in the development of the user interface, ",
+    "including the creation of a soundbar."
 ]
 
 # Función para renderizar texto utilizando Pygame
@@ -74,10 +110,10 @@ def render_texture(texture_id, pos, size):
 def main():
     clock = pygame.time.Clock()
     running = True
-    y_offset = display[1]
+    y_offset = 0  # Comienza desde la parte superior
 
     # Cargar imágenes de prueba
-    texture_paths = ["halley2.png", "SOFI.png", "eliezer.png", "benja.png"]
+    texture_paths = ["SOFI.png", "Dai.png", "eliezer.png", "benja.png", "naturaleza.png"]
     textures = [load_texture(path) for path in texture_paths]
 
     while running:
@@ -88,20 +124,31 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         y = y_offset
 
-        for line in credits:
-            render_text(line, (display[0] // 2 - 100, y))
-            y -= 50  # Espacio entre líneas
+        # Renderizar texto y posicionar imágenes
+        for i, line in enumerate(credits):
+            if line == "NATURENOOK":
+                render_text(line, (display[0] // 2 - 140, y + 240), font_size=50, color=(30, 69, 65))  # Título grande y verde
+            elif line.startswith("Description:"):
+                render_text(line, (display[0] // 2 - 70, y + 220), font_size=24, color=(255, 255, 255))
+                y -= 10  # Espacio mayor después de "Descripción:"
+            else:
+                render_text(line, (display[0] // 2 - 250, y + 200))
 
-        # Renderizar imágenes en diferentes posiciones
-        positions = [(700, y + 200), (700, y + 300), (700, y + 400), (700, y + 100)]
-        size = (80, 80)  # Tamaño de las imágenes
-        for (texture_id, width, height), pos in zip(textures, positions):
-            render_texture(texture_id, pos, size)
+            if i == 10:  # Posicionar la primera imagen cerca de "Ana Ordoñez"
+                render_texture(textures[0][0], (display[0] // 2 + 180, y +65), (130, 130))
+            elif i == 11:  # Posicionar la segunda imagen cerca de "Halley Rugama:"
+                render_texture(textures[1][0], (display[0] // 2 + 180, y -55), (130, 130))
+            elif i == 12:  # Posicionar la tercera imagen cerca de "Eliezer Acuña"
+                render_texture(textures[2][0], (display[0] // 2 + 180, y - 190), (130, 130))
+            elif i == 13:  # Posicionar la cuarta imagen cerca de "Benjamin Salguera"
+                render_texture(textures[3][0], (display[0] // 2 + 180, y - 330), (130, 130))
 
-        y_offset -= 1  # Mueve el texto hacia arriba
+            y -= 20  # Espacio entre líneas
 
-        if y_offset < -len(credits) * 50:
-            y_offset = display[1]
+        y_offset += 2  # Mueve el texto hacia abajo
+
+        if y_offset > display[1]:
+            y_offset = -len(credits) * 60
 
         pygame.display.flip()
         clock.tick(60)
