@@ -47,7 +47,7 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(rock(app, pos=(40, -3, 40), rot=(0,180, 0)))
+        add(rock(app, pos=(0, -1, 0), rot=(0, 260, 0)))
 
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
@@ -64,7 +64,7 @@ class Scene:
             n, s = 30, 5
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
-                    if z == 0 and x == 0:
+                    if z == 0 and x == 0 or x == 0 and z == 5:
                         continue
                     else:
                         random_leaf = random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])

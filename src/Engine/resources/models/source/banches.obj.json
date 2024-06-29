@@ -1,0 +1,15 @@
+{
+  "created_at": "2024-06-28T23:25:45.905789",
+  "version": "0.1",
+  "mtllibs": [
+    "banches.mtl"
+  ],
+  "vertex_buffers": [
+    {
+      "material": "details",
+      "vertex_format": "T2F_N3F_V3F",
+      "byte_offset": 0,
+      "byte_length": 285888
+    }
+  ]
+}
