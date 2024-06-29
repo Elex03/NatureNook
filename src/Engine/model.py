@@ -150,7 +150,7 @@ class MovingCube(Cube):
 
 class Trunk(ExtendedBaseModel):
     def __init__(self, app, vao_name='trunk', tex_id='trunk',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1.2, 1.2, 1.2)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
@@ -216,7 +216,7 @@ for i in range(1, 240):
 
 class Leaves(ExtendedBaseModel):
     def __init__(self, app, vao_name='leaves', tex_id='leaves1',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1.2, 1.2, 1.2)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 class Water(ExtendedBaseModel):
