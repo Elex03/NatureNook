@@ -16,7 +16,7 @@ class GraphicEngine:
         self.game_paused = True  # Comenzar en modo pausa (menú)
 
         # Initialize ImageLoader
-        img_folder = r'botton/'
+        img_folder = r'finished/botton/'
         self.image_loader = ImageLoader(img_folder)
 
         # Initialize ButtonManager and create buttons
