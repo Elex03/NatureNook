@@ -15,4 +15,4 @@ class ButtonCreator:
         self.button_manager.create_button("back", 332, 450, "button_back.png", 1, "options")
 
         # Audio menu buttons
-        self.button_manager.create_button("back", 150, 350, "button_back.png", 1, "resume")  # Add back button for audio menu
+        self.button_manager.create_button("back", 150, 350, "button_back.png", 1, "audio")  # Add back button for audio menu

@@ -37,6 +37,7 @@ class Menu:
         if self.menu_state == "audio":
             self.volume_slider.draw(self.surface)
             self.some_switch.draw(self.surface)
+            self.button_manager.draw_buttons(self.surface, self.menu_state)  # Draw audio menu buttons, including "back"
             self.draw_text(f"Sound", 325, 190)
         elif current_time - self.start_time < 0:
             self.draw_text("Press P to pause", 160, 250)

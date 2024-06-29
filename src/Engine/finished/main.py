@@ -68,7 +68,7 @@ class GraphicEngine:
                 self.screen.blit(self.overlay_surface, (0, 0))
                 # Draw the menu on top
                 action = self.menu.draw_menu()
-                self.menu.adjust_volume_continuously()  # Continu
+                self.menu.adjust_volume_continuously()  # Adjust volume continuously if needed
             else:
                 # Render the game scene
                 self.render()
