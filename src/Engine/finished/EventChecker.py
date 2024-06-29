@@ -18,7 +18,11 @@ class EventChecker:
                     sys.exit()
                 if event.key == pg.K_p:  # Pause the game with "P"
                     self.engine.game_paused = not self.engine.game_paused
-                    self.menu.menu_state = "audio" if self.engine.game_paused else "main"
+                    if self.engine.game_paused:
+                        self.menu.menu_state = "audio"
+                        self.engine.open_transparent_menu()
+                    else:
+                        self.menu.menu_state = "main"
                     self.engine.set_mode()
                 if event.key == pg.K_w:
                     self.menu.button_manager.move_selection_up(self.menu.menu_state)

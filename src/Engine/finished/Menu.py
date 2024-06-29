@@ -34,14 +34,14 @@ class Menu:
         self.surface.fill((0, 0, 0, 128))
         screen.blit(self.background_img, (0, 0))
         current_time = time.time()
-        if current_time - self.start_time < 0:
+        if self.menu_state == "audio":
+            self.volume_slider.draw(self.surface)
+            self.some_switch.draw(self.surface)
+            self.draw_text(f"Sound", 325, 190)
+        elif current_time - self.start_time < 0:
             self.draw_text("Press P to pause", 160, 250)
         else:
             self.button_manager.draw_buttons(self.surface, self.menu_state)
-            if self.menu_state == "audio":
-                self.volume_slider.draw(self.surface)
-                self.some_switch.draw(self.surface)
-                self.draw_text(f"Sound", 325, 190)
         screen.blit(self.surface, (0, 0))
         pg.display.flip()
 

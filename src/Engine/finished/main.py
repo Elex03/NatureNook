@@ -1,10 +1,13 @@
 import pygame as pg
 import moderngl as mgl
+from threading import Thread
 from ImageLoader import ImageLoader
 from ButtonManager import ButtonManager
 from Menu import Menu
 from ButtonCreator import ButtonCreator
 from EventChecker import EventChecker
+import sys
+from pyqt_window import run_pyqt_app  # Importar la función desde pyqt_window.py
 
 class GraphicEngine:
     def __init__(self, win_size=(800, 600)):
@@ -14,6 +17,7 @@ class GraphicEngine:
         self.ctx = None  # Inicializar el contexto de OpenGL como None
         self.clock = pg.time.Clock()
         self.game_paused = True  # Comenzar en modo pausa (menú)
+        self.pyqt_thread = None
 
         # Initialize ImageLoader
         img_folder = r'botton/'
@@ -50,9 +54,7 @@ class GraphicEngine:
             pg.display.flip()
         else:
             self.screen.fill((0, 0, 0))  # Clear the screen with black
-            # Add any other rendering logic here if necessary
             if not self.game_paused:
-                # Draw the game scene here
                 self.screen.fill((0, 0, 0))  # This would be your game rendering logic
 
     def run(self):
@@ -66,14 +68,19 @@ class GraphicEngine:
                 self.screen.blit(self.overlay_surface, (0, 0))
                 # Draw the menu on top
                 action = self.menu.draw_menu()
-                self.menu.adjust_volume_continuously()  # Continuously adjust volume
-                if action == "resume":
-                    self.game_paused = False
-                    self.set_mode()
+                self.menu.adjust_volume_continuously()  # Continu
             else:
+                # Render the game scene
                 self.render()
+            pg.display.flip()
             self.clock.tick(60)
 
-if __name__ == '__main__':
+    def open_transparent_menu(self):
+        # Start the PyQt thread for the transparent menu
+        if not self.pyqt_thread or not self.pyqt_thread.is_alive():
+            self.pyqt_thread = Thread(target=run_pyqt_app)
+            self.pyqt_thread.start()
+
+if __name__ == "__main__":
     app = GraphicEngine()
     app.run()
