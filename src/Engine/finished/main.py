@@ -25,7 +25,9 @@ class GraphicEngine:
 
         # Initialize ButtonManager and create buttons
         self.button_manager = ButtonManager(self.image_loader)
+
         self.button_creator = ButtonCreator(self.button_manager)
+
         self.button_creator.create_buttons()
 
         # Initialize Menu
