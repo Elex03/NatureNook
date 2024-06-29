@@ -15,12 +15,14 @@ class Scene:
         self.index_Fox = 1
         self.index_Bird = 1
         self.index_deer = 1
+        self.index_bee = 1
         self.old_lantern = None
         self.Rain = None
         self.waterSplash = None
         self.deer = None
         self.second_lantern = None  # Añadido para la segunda linterna
         self.Fox = None
+        self.Bee = None
         n = 10
         self.array = [{'water': None, 'y_rain': random.uniform(10, 15), 'x_rain': x, 'z_rain': z}
                       for x in range(-n, n+1) for z in range(-n, n+1)]
@@ -45,7 +47,7 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(rock(app, pos=(0, -1, 0)))
+        add(rock(app, pos=(40, -3, 40), rot=(0,180, 0)))
 
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
@@ -100,12 +102,13 @@ class Scene:
             add(self.app.moving_lamp)
 
     def update(self, pos):
-        global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation
+        global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation
         self.index = self.index + 1 if (self.index + 1) < 25 else 1
         self.index2 = self.index2 + 1 if (self.index2 + 1) < 25 else 1
         self.index_Fox = self.index_Fox + 1 if (self.index_Fox + 1) < 15 else 1
         self.index_Bird = self.index_Bird + 1 if (self.index_Bird + 1) < 104 else 1
         self.index_deer = self.index_deer + 1 if (self.index_deer + 1) < 109 else 1
+        self.index_bee = self.index_bee + 1 if (self.index_bee + 1) < 240 else 1
         # self.rain()
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
@@ -113,6 +116,7 @@ class Scene:
             Fox_animation = globals()[f'Fox_{self.index_Fox}']
             Bird_animation = globals()[f'Bird_{self.index_Bird}']
             Deer_animation = globals()[f'deer_({self.index_deer})']
+            Bee_animation = globals()[f'Bee_({self.index_bee})']
 
         # Calcular la nueva posición alrededor de la cámara
         radius = 1.5
@@ -137,6 +141,8 @@ class Scene:
                 self.remove_object(self.bird)
             if self.deer is not None:
                 self.remove_object(self.deer)
+            if self.Bee is not None:
+                self.remove_object(self.Bee)
 
             # Crea y añade el nuevo objeto con la nueva posición
             self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp, tex_id='frame_1')
@@ -144,6 +150,7 @@ class Scene:
                                                      tex_id='frame_2')
             self.bird = Bird_animation(self.app, pos=(0, -0.9, 0), tex_id='bird')
             self.deer = Deer_animation(self.app, pos=(-9, -1, -16), tex_id='deer', rot=(0, 45, 0))
+            self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
             if self.app.bool_fox:
                 if self.app.position_fox[0] < 12.5:
                     self.app.position_fox[0] += 0.2
@@ -172,12 +179,14 @@ class Scene:
             self.add_object(self.bird)
             self.add_object(self.Fox)
             self.add_object(self.deer)
+            self.add_object(self.Bee)
 
             self.old_lantern.render()
             self.second_lantern.render()
             self.Fox.render()
             self.bird.render()
             self.deer.render()
+            self.Bee.render()
         else:
             self.app.moving_lamp.pos = self.app.position_lamp
 
