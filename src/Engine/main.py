@@ -1,3 +1,5 @@
+# main.py
+
 import pygame as pg
 import moderngl as mgl
 import sys
@@ -7,6 +9,7 @@ from light import Light
 from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
+from button import Button
 
 pg.init()
 pg.mixer.init()
@@ -30,7 +33,7 @@ class GraphicsEngine:
         pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
         # mouse settings
         pg.event.set_grab(True)
-        pg.mouse.set_visible(False)
+        pg.mouse.set_visible(True)  # Make the mouse visible for interaction
         # detect and use existing opengl context
         self.ctx = mgl.create_context()
         # self.ctx.front_face = 'cw'
@@ -55,6 +58,9 @@ class GraphicsEngine:
         # sound
         self.sound_music = pg.mixer.Sound('resources/sounds/sound.mp3')
 
+        # Create a button with an image
+        self.button = Button(10, 10, 150, 50, 'resources/textures/button_image2.png')
+
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
@@ -62,18 +68,18 @@ class GraphicsEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
-                # change state of the light
-                app.is_day = False if app.is_day else True
-                # reload light
-                self.light = Light(self)
-                # reload mesh
-                self.mesh.update()
-                # scene
-                self.scene = Scene(self)
-                # renderer
-                self.scene_renderer = SceneRenderer(self)
-
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                if self.button.is_clicked(event.pos):
+                    # Button clicked, toggle day/night
+                    self.is_day = not self.is_day
+                    # reload light
+                    self.light = Light(self)
+                    # reload mesh
+                    self.mesh.update()
+                    # scene
+                    self.scene = Scene(self)
+                    # renderer
+                    self.scene_renderer = SceneRenderer(self)
 
             pulsar = pg.key.get_pressed()
             if pulsar[pg.K_a] or pulsar[pg.K_s] or pulsar[pg.K_d] or pulsar[pg.K_w]:
@@ -82,11 +88,16 @@ class GraphicsEngine:
             else:
                 sound.fadeout(500)
 
+
     def render(self):
         # clear frame buffer
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         # render scene
         self.scene_renderer.render()
+
+        # Render button
+        self.button.draw(pg.display.get_surface())
+
         # swap buffers
         pg.display.flip()
 
