@@ -30,6 +30,8 @@ class Scene:
         # skyBox
         self.skyBox = AdvancedSkyBox(app)
         self.Positions = app.Position
+        self.isMoon = False
+
 
     def add_object(self, obj):
         self.objects.append(obj)
@@ -187,6 +189,24 @@ class Scene:
         if not self.app.is_day:
             self.app.light = Light(self.app, False, self.app.position_lamp)
             Scene(self.app)
+            SceneRenderer(self.app)
+        else:
+            radius = 50
+
+            time = self.app.time/10 % (2 * math.pi)
+            self.isMoon = False
+            if time > math.pi:
+                time = 2 * math.pi - time
+                self.isMoon = True
+
+
+            # Calcula las nuevas posiciones
+            new_z = radius * glm.cos(time)
+            new_y = radius * glm.sin(time)
+
+            self.app.light = Light(self.app, self.isMoon, [0, new_y, new_z])
+            Scene(self.app)
+            # Recargar renderer
             SceneRenderer(self.app)
 
     def rain(self):

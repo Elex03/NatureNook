@@ -4,13 +4,14 @@ import glm
 class Light:
     def __init__(self, app, toUse, pos):
         self.app = app
+        self.toUse = toUse
         if toUse:
-            self.light((10, 50, 20))
+            self.light(pos)
         else:
             self.light(pos)
 
     def light(self, position):
-        self.color = glm.vec3(self.app.color[0]) if self.app.is_day else glm.vec3(self.app.color[1])
+        self.color = glm.vec3(self.app.color[0]) if not self.toUse else glm.vec3(self.app.color[1])
         self.position = glm.vec3(position)
         self.direction = glm.vec3(0, 0, 0)
 
