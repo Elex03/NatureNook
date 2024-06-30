@@ -47,7 +47,6 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(rock(app, pos=(2.76, -1, 8.08)))
         add(Cabin(app, pos=(-0.74, -1, 2.05), rot=(0, 90, 0)))
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
@@ -142,7 +141,7 @@ class Scene:
             self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp, tex_id='frame_1')
             self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2),
                                                      tex_id='frame_2')
-            self.bird = Bird_animation(self.app, pos=(2.76,-0.9, 8.08), tex_id='bird')
+            self.bird = Bird_animation(self.app, pos=(-6.44,-0.9, 5.61),  tex_id='bird', rot=(0, 90, 0))
             self.deer = Deer_animation(self.app, pos=(-9, -1, -16), tex_id='deer', rot=(0, 45, 0))
             self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
             if self.app.bool_fox:
