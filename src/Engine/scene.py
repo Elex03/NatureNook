@@ -47,8 +47,8 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(rock(app, pos=(0, -1, 0), rot=(0, 260, 0)))
-
+        add(rock(app, pos=(2.76, -1, 8.08)))
+        add(Cabin(app, pos=(-0.74, -1, 2.05), rot=(0, 90, 0)))
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
             self.app.moving_lamp = fireFly(app, pos=self.app.position_lamp, scale=(1, 1, 1))
@@ -64,7 +64,7 @@ class Scene:
             n, s = 30, 5
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
-                    if z == 0 and x == 0 or x == 0 and z == 5:
+                    if z == 0 and x == 0 or x == 0 and z == 5 or x == 5 and z == 0:
                         continue
                     else:
                         random_leaf = random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])
@@ -93,13 +93,7 @@ class Scene:
             self.old_lantern1 = Old_Lantern_class1(app, pos=(0, 3, 0), tex_id='frame_2')
             self.bird = Bird(app, pos=(0, -1, 0), tex_id='bird')
             self.Fox = Fox(app, pos=(0, 2, 0))
-            add(self.old_lantern)
-            add(self.old_lantern1)
-            add(self.Fox)
-            add(self.bird)
 
-        else:
-            add(self.app.moving_lamp)
 
     def update(self, pos):
         global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation
@@ -109,7 +103,7 @@ class Scene:
         self.index_Bird = self.index_Bird + 1 if (self.index_Bird + 1) < 104 else 1
         self.index_deer = self.index_deer + 1 if (self.index_deer + 1) < 109 else 1
         self.index_bee = self.index_bee + 1 if (self.index_bee + 1) < 240 else 1
-        # self.rain()
+        self.rain()
         if self.app.is_day:
             Old_Lantern_class = globals()[f'frame_{self.index}']
             Old_Lantern_class1 = globals()[f'frame_{self.index2}']
@@ -148,7 +142,7 @@ class Scene:
             self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp, tex_id='frame_1')
             self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2),
                                                      tex_id='frame_2')
-            self.bird = Bird_animation(self.app, pos=(0, -0.9, 0), tex_id='bird')
+            self.bird = Bird_animation(self.app, pos=(2.76,-0.9, 8.08), tex_id='bird')
             self.deer = Deer_animation(self.app, pos=(-9, -1, -16), tex_id='deer', rot=(0, 45, 0))
             self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
             if self.app.bool_fox:
@@ -194,28 +188,32 @@ class Scene:
         if not self.app.is_day:
             self.app.light = Light(self.app, False, self.app.position_lamp)
             Scene(self.app)
-            # Recargar renderer
             SceneRenderer(self.app)
 
     def rain(self):
         add = self.add_object
 
-        for item in self.array:
-            # Aplicar las operaciones específicas para cada elemento
-            if item['y_rain'] > 0:
-                item['y_rain'] = item['y_rain'] - 0.3
-            else:
-                if self.waterSplash is not None:
-                    self.remove_object(self.waterSplash)
-                self.waterSplash = WaterSplash(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
-                add(self.waterSplash)
-                item['y_rain'] = random.uniform(10, 5)
+        if self.app.isRain:
+            for item in self.array:
+                # Aplicar las operaciones específicas para cada elemento
+                if item['y_rain'] > 0:
+                    item['y_rain'] = item['y_rain'] - 0.3
+                else:
+                    if self.waterSplash is not None:
+                        self.remove_object(self.waterSplash)
+                    self.waterSplash = WaterSplash(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
+                    add(self.waterSplash)
+                    item['y_rain'] = random.uniform(10, 5)
 
 
-            # Suponer que tenemos métodos y atributos definidos para self.app y Water
+                # Suponer que tenemos métodos y atributos definidos para self.app y Water
 
-            if 'Rain' in item and item['Rain'] is not None:
-                self.remove_object(item['Rain'])
+                if 'Rain' in item and item['Rain'] is not None:
+                    self.remove_object(item['Rain'])
 
-            item['Rain'] = Water(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
-            add(item['Rain'])
+                item['Rain'] = Water(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
+                add(item['Rain'])
+        else:
+            for item in self.array:
+                if 'Rain' in item and item['Rain'] is not None:
+                    self.remove_object(item['Rain'])

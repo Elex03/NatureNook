@@ -2,7 +2,7 @@ class Collisions:
     def __init__(self, app):
         self.app = app
         self.limits = (0.5, 2, 4)
-        self.position_rock = (0, 0)
+        self.position_rock = (2.76, 8.08)
 
     def check_limits(self, position):
         collisionFound = True

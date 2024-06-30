@@ -237,6 +237,12 @@ class Grass(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
+class Cabin(ExtendedBaseModel):
+    def __init__(self, app, vao_name='cabin', tex_id='cabin',
+                 pos=(0, 90, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
 class fireFly(ExtendedBaseModel):
     def __init__(self, app, vao_name='fireFly', tex_id='fireFly',
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):

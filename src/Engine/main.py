@@ -51,10 +51,10 @@ class GraphicsEngine:
         self.light = Light(self, True, (50, 50, -10))
         # Array
         self.Position = []
-        # mesh
-        self.mesh = Mesh(self)
         # scene
         self.var = True
+        # mesh
+        self.mesh = Mesh(self)
         self.position_lamp = (0, 0, 0)
         self.position_fox = [0, -1, 0]
         self.position_grass = []
@@ -63,6 +63,8 @@ class GraphicsEngine:
         self.scene = Scene(self)
         # renderer
         self.scene_renderer = SceneRenderer(self)
+        # rain
+        self.isRain = False
 
     def check_events(self):
         for event in pg.event.get():
@@ -77,11 +79,14 @@ class GraphicsEngine:
                 # change state of the light
                 self.light = Light(self, self.is_day, self.position_lamp)
                 # reload mesh
-                self.mesh = Mesh(self)
+                self.mesh.update()
                 # reload scene
                 self.scene = Scene(self)
                 # reload renderer
                 self.scene_renderer = SceneRenderer(self)
+            if event.type == pg.KEYDOWN and event.key == pg.K_p:
+                self.isRain = not self.isRain
+
 
     def render(self):
         # clear frame buffer

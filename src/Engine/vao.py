@@ -26,6 +26,8 @@ class VAO:
             ('shadow_fireFly', 'shadow_map', 'fireFly'),
             ('rock', 'default', 'rock'),
             ('shadow_rock', 'shadow_map', 'rock'),
+            ('cabin', 'default', 'cabin'),
+            ('shadow_cabin', 'shadow_map', 'cabin'),
             ('deer', 'default', 'deer'),
             ('shadow_deer', 'shadow_map', 'deer'),
             ('water', 'default', 'water'),
