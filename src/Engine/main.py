@@ -8,6 +8,8 @@ from mesh import Mesh
 from scene import Scene
 from scene_renderer import SceneRenderer
 from button import Button
+from Slider import Slider
+from switch import Switch
 
 pg.init()
 pg.mixer.init()
@@ -51,6 +53,11 @@ class GraphicsEngine:
         self.button = Button(10, 10, 150, 50, 'resources/textures/button_image2.png')
         self.isPause = False
 
+        self.slider = Slider(200, 200, 200, 20, 0, 100, 50)
+        self.switch = Switch(200, 250, 60, 30)
+
+        self.show_slider_and_switch = False
+
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
@@ -67,14 +74,24 @@ class GraphicsEngine:
                     pg.mouse.set_visible(0)
                     GraphicsEngine()
 
-        # Handle other events as needed
-        # ...
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if self.isPause and self.button.is_clicked(event.pos):
+                    self.show_slider_and_switch = True
+
+            if self.show_slider_and_switch:
+                self.slider.handle_event(event)
+                self.switch.handle_event(event)
 
     def render_Menu(self):
-        self.ctx.clear(color=(0.08, 0.16, 0.18))  # Clear the background
+        surface = pg.display.get_surface()
+        surface.fill((0, 0, 0))  # Clear the entire surface
 
         # Render menu elements
-        self.button.draw(pg.display.get_surface())
+        self.button.draw(surface)
+
+        if self.show_slider_and_switch:
+            self.slider.draw(surface)
+            self.switch.draw(surface)
 
         pg.display.flip()  # Update the display
 
