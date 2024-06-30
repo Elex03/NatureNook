@@ -10,7 +10,11 @@ class GraphicEngine:
     def __init__(self, win_size=(800, 600)):
         pg.init()
         self.WIN_SIZE = win_size
-        self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)  # Comenzar en modo menú
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
+        pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
+        # create opengl context
+        pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE | pg.OPENGL | pg.DOUBLEBUF)
         self.ctx = None  # Inicializar el contexto de OpenGL como None
         self.clock = pg.time.Clock()
         self.game_paused = True  # Comenzar en modo pausa (menú)
@@ -37,10 +41,7 @@ class GraphicEngine:
         self.overlay_surface = pg.Surface(self.WIN_SIZE, pg.SRCALPHA)
 
     def set_mode(self):
-        if self.game_paused:
-            self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)
-        else:
-            self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        if not self.game_paused:
             if not self.ctx:
                 self.ctx = mgl.create_context()
 
