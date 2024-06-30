@@ -1,3 +1,5 @@
+# Slider.py
+
 import pygame as pg
 
 class Slider:
@@ -48,17 +50,10 @@ class Slider:
                 self.val = (rel_x / self.rect.w) * (self.max_val - self.min_val) + self.min_val
                 self.val = max(self.min_val, min(self.max_val, self.val))
 
-        elif event.type == pg.KEYDOWN:
-            if event.key == pg.K_a:
-                self.adjust_value(-1)
-            elif event.key == pg.K_d:
-                self.adjust_value(1)
-
     def get_value(self):
         return self.val
 
     def adjust_value(self, amount):
         self.val += amount
         self.val = max(self.min_val, min(self.max_val, self.val))
-        print("Sound:",
-              int(self.val))
+        print("Sound:", int(self.val))
