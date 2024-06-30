@@ -30,7 +30,7 @@ class GraphicsEngine:
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         # create opengl context
-        pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
+        pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE | pg.OPENGL | pg.DOUBLEBUF)
         # mouse settings
         pg.event.set_grab(True)
         pg.mouse.set_visible(True)  # Make the mouse visible for interaction
@@ -58,8 +58,10 @@ class GraphicsEngine:
         # sound
         self.sound_music = pg.mixer.Sound('resources/sounds/sound.mp3')
 
-        # Create a button with an image
         self.button = Button(10, 10, 150, 50, 'resources/textures/button_image2.png')
+        # Pause state
+        self.isPause = False
+
 
     def check_events(self):
         for event in pg.event.get():
@@ -68,18 +70,12 @@ class GraphicsEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                if self.button.is_clicked(event.pos):
-                    # Button clicked, toggle day/night
-                    self.is_day = not self.is_day
-                    # reload light
-                    self.light = Light(self)
-                    # reload mesh
-                    self.mesh.update()
-                    # scene
-                    self.scene = Scene(self)
-                    # renderer
-                    self.scene_renderer = SceneRenderer(self)
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
+                self.isPause = True if self.isPause == False else False
+                pg.mouse.set_visible(1)
+                print(self.isPause)
+
+
 
             pulsar = pg.key.get_pressed()
             if pulsar[pg.K_a] or pulsar[pg.K_s] or pulsar[pg.K_d] or pulsar[pg.K_w]:
@@ -89,14 +85,16 @@ class GraphicsEngine:
                 sound.fadeout(500)
 
 
+    def render_Menu(self):
+        self.ctx.clear(color=(0.08, 0.16, 0.18))
+
+        self.button.draw(pg.display.get_surface())
+
     def render(self):
         # clear frame buffer
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         # render scene
         self.scene_renderer.render()
-
-        # Render button
-        self.button.draw(pg.display.get_surface())
 
         # swap buffers
         pg.display.flip()
@@ -106,10 +104,14 @@ class GraphicsEngine:
 
     def run(self):
         while True:
+            if not self.isPause:
+                self.camera.update()
+                self.render()
+            else:
+                self.render_Menu()
+
             self.get_time()
             self.check_events()
-            self.camera.update()
-            self.render()
             self.delta_time = self.clock.tick(60)
 
 
