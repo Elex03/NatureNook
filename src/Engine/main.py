@@ -45,7 +45,7 @@ class GraphicsEngine:
         self.color = [(1, 1, 1), (0.145,0.157,0.314),(0.961,0.588,0.133)]
         # camera
         self.is_day = True
-        self.isStatic = False
+        self.isStatic = True
         self.camera = Camera(self)
         self.position_camera = self.camera.position
         # light
