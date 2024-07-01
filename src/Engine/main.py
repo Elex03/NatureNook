@@ -45,6 +45,7 @@ class GraphicsEngine:
         self.color = [(1, 1, 1), (0.145,0.157,0.314),(0.961,0.588,0.133)]
         # camera
         self.is_day = True
+        self.isStatic = False
         self.camera = Camera(self)
         self.position_camera = self.camera.position
         # light
@@ -74,18 +75,10 @@ class GraphicsEngine:
                 self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
-            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
-                self.is_day = not self.is_day
-                # change state of the light
-                self.light = Light(self, self.is_day, self.position_lamp)
-                # reload mesh
-                self.mesh.update()
-                # reload scene
-                self.scene = Scene(self)
-                # reload renderer
-                self.scene_renderer = SceneRenderer(self)
             if event.type == pg.KEYDOWN and event.key == pg.K_p:
                 self.isRain = not self.isRain
+            if event.type == pg.KEYDOWN and event.key == pg.K_o:
+                self.isStatic = not self.isStatic
 
 
     def render(self):

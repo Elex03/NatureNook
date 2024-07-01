@@ -13,6 +13,8 @@ class VBO:
             'grass': ModelVBO(ctx, 'resources/models/source/grass.obj'),
             'fireFly': ModelVBO(ctx, 'resources/models/source/fireFly.obj'),
             'rock': ModelVBO(ctx, 'resources/models/source/rock.obj'),
+            'flower': ModelVBO(ctx, 'resources/models/source/pond.obj'),
+            'radio': ModelVBO(ctx, 'resources/models/source/radio.obj'),
             'cabin': ModelVBO(ctx, 'resources/models/source/cabin.obj'),
             'deer': ModelVBO(ctx, 'resources/models/source/deer.obj'),
             'waterSplash': ModelVBO(ctx, 'resources/models/source/water_splash.obj'),

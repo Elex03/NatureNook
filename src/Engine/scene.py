@@ -25,13 +25,13 @@ class Scene:
         self.Bee = None
         n = 10
         self.array = [{'water': None, 'y_rain': random.uniform(10, 15), 'x_rain': x, 'z_rain': z}
-                      for x in range(-n, n+1) for z in range(-n, n+1)]
+                      for x in range(-n, n + 1) for z in range(-n, n + 1)]
         self.load()
         # skyBox
         self.skyBox = AdvancedSkyBox(app)
         self.Positions = app.Position
         self.isMoon = False
-
+        self.positionLight = glm.vec3(0, 0, 0)
 
     def add_object(self, obj):
         self.objects.append(obj)
@@ -49,12 +49,13 @@ class Scene:
             for z in range(-n, n, s):
                 add(Cube(app, pos=(x, -s, z)))
 
-        add(Cabin(app, pos=(-0.74, -1, 2.05), rot=(0, 90, 0)))
+        add(Cabin(app, pos=(5, -0.5, 0), rot=(0, 90, 0)))
+        add(Radio(app, pos=(-1.71, 1.2, 1.08)))
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
             self.app.moving_lamp = fireFly(app, pos=self.app.position_lamp, scale=(1, 1, 1))
 
-            n, s = 20, 2
+            n, s = 30, 4
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
                     x_pos = x + random.uniform(0, 1)
@@ -65,7 +66,7 @@ class Scene:
             n, s = 30, 5
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
-                    if z == 0 and x == 0 or x == 0 and z == 5 or x == 5 and z == 0:
+                    if z == 0 and x == 0 or x == 0 and z == 5 or x == 5 and z == 0 or x == 5 and z == 5:
                         continue
                     else:
                         random_leaf = random.choice(['leaf1', 'leaf2', 'leaf3', 'leaf4'])
@@ -94,7 +95,6 @@ class Scene:
             self.old_lantern1 = Old_Lantern_class1(app, pos=(0, 3, 0), tex_id='frame_2')
             self.bird = Bird(app, pos=(0, -1, 0), tex_id='bird')
             self.Fox = Fox(app, pos=(0, 2, 0))
-
 
     def update(self, pos):
         global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation
@@ -143,7 +143,7 @@ class Scene:
             self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp, tex_id='frame_1')
             self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2),
                                                      tex_id='frame_2')
-            self.bird = Bird_animation(self.app, pos=(-6.44,-0.9, 5.61),  tex_id='bird', rot=(0, 90, 0))
+            self.bird = Bird_animation(self.app, pos=(-6.44, -0.9, 5.61), tex_id='bird', rot=(0, 90, 0))
             self.deer = Deer_animation(self.app, pos=(-9, -1, -16), tex_id='deer', rot=(0, 45, 0))
             self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
             if self.app.bool_fox:
@@ -185,36 +185,54 @@ class Scene:
         else:
             self.app.moving_lamp.pos = self.app.position_lamp
 
-        # Actualiza la lámpara móvil si es de noche
-        if not self.app.is_day:
-            self.app.light = Light(self.app, False, self.app.position_lamp)
+        if self.app.isStatic:
+            self.app.light = Light(self.app, self.isMoon, self.positionLight)
             Scene(self.app)
             SceneRenderer(self.app)
         else:
             radius = 50
+            time = self.app.time / 20 % (2 * math.pi)
 
-            time = self.app.time/10 % (2 * math.pi)
-            self.isMoon = False
             if time > math.pi:
                 time = 2 * math.pi - time
-                self.isMoon = True
+            if time == 3.14:
+                self.reloadMesh()
 
-
-            # Calcula las nuevas posiciones
             new_z = radius * glm.cos(time)
             new_y = radius * glm.sin(time)
+            self.positionLight = glm.vec3(0, new_y, new_z)
 
-            self.app.light = Light(self.app, self.isMoon, [0, new_y, new_z])
+            self.app.light = Light(self.app, self.isMoon, self.positionLight)
             Scene(self.app)
             # Recargar renderer
             SceneRenderer(self.app)
+
+    def reloadMesh(self):
+        self.app.is_day = not self.app.is_day
+        # change state of the light
+        self.app.light = Light(self.app, self.isMoon, self.positionLight)
+        # reload mesh
+        self.app.mesh.update()
+        # reload scene
+        self.app.scene = Scene(self.app)
+        # reload renderer
+        self.app.scene_renderer = SceneRenderer(self.app)
+
+    def loadMeshNight(self):
+        if self.isMoon is False:
+            self.reloadMesh()
+            self.isMoon = True
+
+    def loadMeshDay(self):
+        if self.isMoon is True:
+            self.reloadMesh()
+            self.isMoon = False
 
     def rain(self):
         add = self.add_object
 
         if self.app.isRain:
             for item in self.array:
-                # Aplicar las operaciones específicas para cada elemento
                 if item['y_rain'] > 0:
                     item['y_rain'] = item['y_rain'] - 0.3
                 else:
@@ -223,9 +241,6 @@ class Scene:
                     self.waterSplash = WaterSplash(self.app, pos=(item['x_rain'], item['y_rain'], item['z_rain']))
                     add(self.waterSplash)
                     item['y_rain'] = random.uniform(10, 5)
-
-
-                # Suponer que tenemos métodos y atributos definidos para self.app y Water
 
                 if 'Rain' in item and item['Rain'] is not None:
                     self.remove_object(item['Rain'])

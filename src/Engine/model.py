@@ -231,9 +231,20 @@ class WaterSplash(ExtendedBaseModel):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
+class Flower(ExtendedBaseModel):
+    def __init__(self, app, vao_name='flower', tex_id='flower',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(10, 10, 10)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
+class Radio(ExtendedBaseModel):
+    def __init__(self, app, vao_name='radio', tex_id='radio',
+                 pos=(0, 0, 0), rot=(0, 90, 0), scale=(0.2, 0.2, 0.2)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
 class Grass(ExtendedBaseModel):
     def __init__(self, app, vao_name='grass', tex_id='grass',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1.5, 1.5, 1.5)):
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1.2, 1.2, 1.2)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
 
