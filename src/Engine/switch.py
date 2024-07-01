@@ -1,8 +1,7 @@
 import pygame as pg
 
-
 class Switch:
-    def __init__(self, x, y, width, height, initial_state=False):
+    def __init__(self, x, y, width, height, initial_state=False, engine=None):
         self.rect = pg.Rect(x, y, width, height)
         self.state = initial_state
         self.font = pg.font.SysFont(None, 24)
@@ -15,6 +14,7 @@ class Switch:
         self.off_text = self.font.render('OFF', True, (255, 255, 255))
         self.animation_speed = 10
         self.current_x = x if not initial_state else x + width - height
+        self.engine = engine  # Referencia a la instancia de GraphicsEngine
 
     def draw(self, screen):
         # Draw the switch background with rounded corners
@@ -38,6 +38,10 @@ class Switch:
                 self.state = not self.state
                 self.target_x = self.rect.x if not self.state else self.rect.x + self.rect.width - self.rect.height
 
+                # Cambiar el skybox según el estado del switch
+                if self.engine:
+                    self.engine.set_skybox(self.state)
+
     def update(self):
         if hasattr(self, 'target_x'):
             if self.state and self.current_x < self.target_x:
@@ -51,4 +55,3 @@ class Switch:
 
     def get_state(self):
         return self.state
-

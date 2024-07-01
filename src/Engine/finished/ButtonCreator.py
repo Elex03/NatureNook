@@ -10,6 +10,7 @@ class ButtonCreator:
         self.button_manager.create_button("options", 43, 325, "button_options.png", 1, "main")
         self.button_manager.create_button("quit", 36, 450, "button_quit.png", 1, "main")
 
+
         # Options menu buttons
         self.button_manager.create_button("audio", 225, 200, "button_audio.png", 1, "options")
         self.button_manager.create_button("back", 332, 450, "button_back.png", 1, "options")
