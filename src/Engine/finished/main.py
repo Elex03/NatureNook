@@ -8,7 +8,6 @@ from ButtonCreator import ButtonCreator
 from EventChecker import EventChecker
 import sys
 
-
 class GraphicEngine:
     def __init__(self, win_size=(800, 600)):
         pg.init()
@@ -21,6 +20,7 @@ class GraphicEngine:
 
         # Initialize ImageLoader
         img_folder = r'botton/'
+
         self.image_loader = ImageLoader(img_folder)
 
         # Initialize ButtonManager and create buttons
@@ -76,8 +76,6 @@ class GraphicEngine:
                 self.render()
             pg.display.flip()
             self.clock.tick(60)
-
-
 
 if __name__ == "__main__":
     app = GraphicEngine()
