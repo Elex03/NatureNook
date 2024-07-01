@@ -9,11 +9,13 @@ from scene import Scene
 from scene_renderer import SceneRenderer
 from Slider import Slider
 from switch import Switch
+from button import Button  # Importar la clase Button
 
 pg.init()
 pg.mixer.init()
 
 sound = pg.mixer.Sound('resources/sounds/a.wav')
+
 
 class GraphicsEngine:
     def __init__(self, win_size=(630, 480)):
@@ -53,6 +55,9 @@ class GraphicsEngine:
         self.slider = Slider(200, 200, 200, 20, 0, 100, 50)
         self.switch = Switch(280, 300, 60, 30)
 
+        # Instanciar el botón
+        self.button = Button(200, 350, 100, 60, 'resources/textures/button_image2.png')
+
         self.show_slider_and_switch = True  # Mostrar el slider y el switch por defecto
 
         self.cursor_index = 0  # Índice del cursor para señalar el elemento actual (0: slider, 1: switch)
@@ -60,7 +65,8 @@ class GraphicsEngine:
         self.holding_d = False
 
         self.font = pg.font.SysFont("arialblack", 24)  # Crear una fuente para el texto de pausa
-        self.volume_font = pg.font.SysFont("comicsansms", 20)  # Crear una fuente diferente para el texto "overall volume"
+        self.volume_font = pg.font.SysFont("comicsansms",
+                                           20)  # Crear una fuente diferente para el texto "overall volume"
 
     def check_events(self):
         for event in pg.event.get():
@@ -100,6 +106,12 @@ class GraphicsEngine:
                 self.slider.handle_event(event)
                 self.switch.handle_event(event)
 
+            # Manejar el clic en el botón
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+                if self.button.is_clicked(event.pos):
+                    pg.quit()
+                    sys.exit()
+
     def update_slider_and_switch(self):
         if self.cursor_index == 0:  # Slider
             if self.holding_a:
@@ -133,6 +145,9 @@ class GraphicsEngine:
         self.slider.draw(surface)
         self.switch.draw(surface)
 
+        # Render the button
+        self.button.draw(surface)
+
         # Dibujar el cursor alrededor del elemento actual
         if self.cursor_index == 0:  # Cursor en el slider
             pg.draw.rect(surface, (255, 0, 0), self.slider.rect.inflate(10, 10), 2)
@@ -164,6 +179,7 @@ class GraphicsEngine:
 
             self.get_time()
             self.delta_time = self.clock.tick(60)
+
 
 if __name__ == '__main__':
     app = GraphicsEngine()

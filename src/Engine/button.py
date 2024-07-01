@@ -14,6 +14,8 @@ class Button:
 
     def draw(self, surface):
         surface.blit(self.image, self.rect.topleft)
+        # Dibujar un borde rojo alrededor del botón
+        pg.draw.rect(surface, (255, 0, 0), self.rect, 2)
 
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
