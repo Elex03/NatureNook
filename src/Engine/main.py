@@ -51,7 +51,7 @@ class GraphicsEngine:
         self.isPause = False
 
         self.slider = Slider(200, 200, 200, 20, 0, 100, 50)
-        self.switch = Switch(280, 250, 60, 30)
+        self.switch = Switch(280, 300, 60, 30)
 
         self.show_slider_and_switch = True  # Mostrar el slider y el switch por defecto
 
@@ -60,6 +60,7 @@ class GraphicsEngine:
         self.holding_d = False
 
         self.font = pg.font.SysFont("arialblack", 24)  # Crear una fuente para el texto de pausa
+        self.volume_font = pg.font.SysFont("comicsansms", 20)  # Crear una fuente diferente para el texto "overall volume"
 
     def check_events(self):
         for event in pg.event.get():
@@ -119,7 +120,14 @@ class GraphicsEngine:
 
         # Render the "Pause" text
         pause_text = self.font.render("Pause", True, (255, 255, 255))
-        surface.blit(pause_text, (self.slider.rect.x + 70, self.slider.rect.y - 70))
+        surface.blit(pause_text, (self.slider.rect.x + 70, self.slider.rect.y - 130))
+
+        # Render the "overall volume" text with the new font
+        volume_text = self.volume_font.render("overall volume", True, (255, 255, 255))
+        surface.blit(volume_text, (self.slider.rect.x + 30, self.slider.rect.y - 40))
+
+        volume_text = self.volume_font.render("static time day", True, (255, 255, 255))
+        surface.blit(volume_text, (self.slider.rect.x + 30, self.slider.rect.y + 50))
 
         # Render menu elements
         self.slider.draw(surface)
