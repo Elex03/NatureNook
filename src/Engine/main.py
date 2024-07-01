@@ -66,6 +66,7 @@ class GraphicsEngine:
         self.scene_renderer = SceneRenderer(self)
         # rain
         self.isRain = False
+        self.isMoon = False
 
     def check_events(self):
         for event in pg.event.get():

@@ -30,7 +30,8 @@ class Scene:
         # skyBox
         self.skyBox = AdvancedSkyBox(app)
         self.Positions = app.Position
-        self.isMoon = False
+
+        self.state = False
         self.positionLight = glm.vec3(0, 0, 0)
 
     def add_object(self, obj):
@@ -186,23 +187,24 @@ class Scene:
             self.app.moving_lamp.pos = self.app.position_lamp
 
         if self.app.isStatic:
-            self.app.light = Light(self.app, self.isMoon, self.positionLight)
+            self.app.light = Light(self.app, self.app.isMoon, self.positionLight)
             Scene(self.app)
             SceneRenderer(self.app)
         else:
             radius = 50
-            time = self.app.time / 20 % (2 * math.pi)
+            time = self.app.time / 6 % (2 * math.pi)
 
             if time > math.pi:
                 time = 2 * math.pi - time
-            if time == 3.14:
-                self.reloadMesh()
+                self.loadMeshNight()
+            else:
+                self.loadMeshDay()
 
             new_z = radius * glm.cos(time)
             new_y = radius * glm.sin(time)
             self.positionLight = glm.vec3(0, new_y, new_z)
 
-            self.app.light = Light(self.app, self.isMoon, self.positionLight)
+            self.app.light = Light(self.app, self.app.isMoon, self.positionLight)
             Scene(self.app)
             # Recargar renderer
             SceneRenderer(self.app)
@@ -210,7 +212,7 @@ class Scene:
     def reloadMesh(self):
         self.app.is_day = not self.app.is_day
         # change state of the light
-        self.app.light = Light(self.app, self.isMoon, self.positionLight)
+        self.app.light = Light(self.app, self.app.isMoon, self.positionLight)
         # reload mesh
         self.app.mesh.update()
         # reload scene
@@ -219,14 +221,14 @@ class Scene:
         self.app.scene_renderer = SceneRenderer(self.app)
 
     def loadMeshNight(self):
-        if self.isMoon is False:
+        if self.app.isMoon is False:
             self.reloadMesh()
-            self.isMoon = True
+            self.app.isMoon = True
 
     def loadMeshDay(self):
-        if self.isMoon is True:
+        if self.app.isMoon is True:
             self.reloadMesh()
-            self.isMoon = False
+            self.app.isMoon = False
 
     def rain(self):
         add = self.add_object
