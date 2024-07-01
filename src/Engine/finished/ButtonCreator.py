@@ -9,7 +9,7 @@ class ButtonCreator:
         self.button_manager.create_button("resume", 50, 200, "button_resume.png", 1, "main")
         self.button_manager.create_button("options", 43, 325, "button_options.png", 1, "main")
         self.button_manager.create_button("quit", 36, 450, "button_quit.png", 1, "main")
-        self.button_manager.create_button("Logo", -40, 30, "Naturenook.png", 1, "main")
+        self.button_manager.create_button("Logo", -100, 30, "TITLE.png", 1, "main")
 
 
         # Options menu buttons
