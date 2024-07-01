@@ -22,6 +22,8 @@ class Texture:
             'fireFly': self.get_texture(path='resources/models/textures/fireFly.png'),
             'Fox': self.get_texture(path='resources/models/textures/Fox.png'),
             'flower': self.get_texture(path='resources/models/textures/Pond_baseColor.png'),
+            'cupM': self.get_texture(path='resources/models/textures/cupM.png'),
+            'bodyM': self.get_texture(path='resources/models/textures/bodyM.png'),
             'radio': self.get_texture(path='resources/models/textures/radio.png'),
             'frame_1': self.get_texture(path='resources/models/textures/BFBlue.png'),
             'frame_2': self.get_texture(path='resources/models/textures/BFOrange.png'),

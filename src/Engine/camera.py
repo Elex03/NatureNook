@@ -27,7 +27,7 @@ class Camera:
         # projection matrix
         self.m_proj = self.get_projection_matrix()
         self.Limits = glm.vec2(100, -100)
-        self.Pos_Radio = glm.vec3(15, 2, 7)
+        self.Pos_Radio = glm.vec3(-1.71, 1.2, 1.08)
         # auxiliar
         self.x = 0
         self.z = 0
@@ -65,12 +65,14 @@ class Camera:
         keys = pg.key.get_pressed()
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
             distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
-            if distance < 20:
+            if distance < 5:
                 volume = round(distance) / 20
-                # volume_normalized = abs(volume - 1)
-                # self.app.sound_music.set_volume(volume_normalized)
-                # print('Volume: ', self.app.sound_music.get_volume())
-
+                volume_normalized = abs(volume - 1)
+                self.app.RadioAurora.set_volume(volume_normalized)
+                print('Volume: ', self.app.RadioAurora.get_volume())
+                self.app.BackgroundSound.set_volume(0.5)
+            else:
+                self.app.BackgroundSound.set_volume(1)
         if keys[pg.K_w]:
             self.z = self.position[2] + self.forward[2] * velocity
             self.x = self.position[0] + self.forward[0] * velocity

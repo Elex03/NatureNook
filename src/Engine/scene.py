@@ -8,6 +8,7 @@ import math
 
 class Scene:
     def __init__(self, app):
+        self.Bee2 = None
         self.deer2 = None
         self.app = app
         self.objects = []
@@ -54,6 +55,7 @@ class Scene:
 
         add(Cabin(app, pos=(5, -0.5, 0), rot=(0, 90, 0)))
         add(Radio(app, pos=(-1.71, 1.2, 1.08)))
+
         if self.app.var:
             self.app.moving_cube = MovingCube(app, pos=(7, 6, 7), scale=(3, 3, 3), tex_id=1)
             self.app.moving_lamp = fireFly(app, pos=self.app.position_lamp, scale=(1, 1, 1))
@@ -61,10 +63,16 @@ class Scene:
             n, s = 30, 4
             for x in range(-n, n, s):
                 for z in range(-n, n, s):
+                    if z == 0 and x == 0 or x == 0 and z == 4 or x == 4 and z == 0 or x == 4 and z == 4:
+                        continue
                     x_pos = x + random.uniform(0, 1)
                     z_pos = z + random.uniform(0, 2)
                     self.app.position_grass.append((x_pos, z_pos))
                     add(Grass(app, pos=(x_pos, -1, z_pos)))
+                    x_posn = x_pos - random.uniform(0, 1)
+                    z_posn = z_pos + random.uniform(0, 2)
+                    add(cupM(app, pos=(x_posn, -1, z_posn)))
+                    add(bodyM(app,  pos=(x_posn, -1, z_posn)))
 
             n, s = 30, 5
             for x in range(-n, n, s):
@@ -98,6 +106,8 @@ class Scene:
             self.old_lantern1 = Old_Lantern_class1(app, pos=(0, 3, 0), tex_id='frame_2')
             self.bird = Bird(app, pos=(0, -1, 0), tex_id='bird')
             self.Fox = Fox(app, pos=(0, 2, 0))
+        else:
+            add(self.app.moving_lamp)
 
     def update(self, pos):
         global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation, Deer_animation2
@@ -145,15 +155,18 @@ class Scene:
                 self.remove_object(self.deer2)
             if self.Bee is not None:
                 self.remove_object(self.Bee)
+            if self.Bee2 is not None:
+                self.remove_object(self.Bee2)
 
             # Crea y añade el nuevo objeto con la nueva posición
             self.old_lantern = Old_Lantern_class(self.app, pos=self.app.position_lamp, tex_id='frame_1')
             self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2),
                                                      tex_id='frame_2')
-            self.bird = Bird_animation(self.app, pos=(-6.44, -0.9, 5.61), tex_id='bird', rot=(0, 90, 0))
+            self.bird = Bird_animation(self.app, pos=(-1.2, -0.4, 2.64), tex_id='bird', rot=(0, 90, 0))
             self.deer = Deer_animation(self.app, pos=(12, -1, -16), tex_id='deer', rot=(0, 45, 0))
             self.deer2 = Deer_animation2(self.app, pos=(15.5, -1, -16), tex_id='deer', rot=(0, 290, 0))
-            self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
+            self.Bee = Bee_animation(self.app, pos=(7.83, 0, 4.04), tex_id='bee')
+            self.Bee2 = Bee_animation(self.app, pos=(7.83, 0, 5.04), tex_id='bee', rot=(0, 45, 0))
             if self.app.bool_fox:
                 if self.app.position_fox[0] < 12.5:
                     self.app.position_fox[0] += 0.2
@@ -184,6 +197,7 @@ class Scene:
             self.add_object(self.deer)
             self.add_object(self.deer2)
             self.add_object(self.Bee)
+            self.add_object(self.Bee2)
 
             self.old_lantern.render()
             self.second_lantern.render()
@@ -191,12 +205,17 @@ class Scene:
             self.bird.render()
             self.deer.render()
             self.Bee.render()
+            self.Bee2.render()
             self.deer2.render()
         else:
             self.app.moving_lamp.pos = self.app.position_lamp
 
         if self.app.isStatic:
             self.app.light = Light(self.app, self.app.isMoon, self.positionLight)
+            Scene(self.app)
+            SceneRenderer(self.app)
+        elif self.app.isStatic and self.app.isMon:
+            self.app.light = Light(self.app, self.app.isMoon, self.app.position_lamp)
             Scene(self.app)
             SceneRenderer(self.app)
         else:

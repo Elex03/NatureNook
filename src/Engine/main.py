@@ -13,6 +13,7 @@ pg.init()
 pg.mixer.init()
 
 
+
 class GraphicsEngine:
     def __init__(self, win_size=(840, 480)):
         # window size
@@ -62,6 +63,8 @@ class GraphicsEngine:
         self.rot_fox = 0
         self.bool_fox = True
         self.scene = Scene(self)
+        self.BackgroundSound = pg.mixer.Sound('resources/sounds/Nature.mp3')
+        self.RadioAurora = pg.mixer.Sound('resources/sounds/Dreams.mp3')
         # renderer
         self.scene_renderer = SceneRenderer(self)
         # rain
@@ -105,4 +108,7 @@ class GraphicsEngine:
 
 if __name__ == '__main__':
     app = GraphicsEngine()
+    app.BackgroundSound.play(-1)
+    app.RadioAurora.play(-1)
+    app.RadioAurora.set_volume(0)
     app.run()

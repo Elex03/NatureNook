@@ -224,6 +224,17 @@ class Water(ExtendedBaseModel):
                  pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
         super().__init__(app, vao_name, tex_id, pos, rot, scale)
 
+class cupM(ExtendedBaseModel):
+    def __init__(self, app, vao_name='cupM', tex_id='cupM',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.4, 0.4, 0.4)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+class bodyM(ExtendedBaseModel):
+    def __init__(self, app, vao_name='bodyM', tex_id='bodyM',
+                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(0.4, 0.4, 0.4)):
+        super().__init__(app, vao_name, tex_id, pos, rot, scale)
+
+
 
 class WaterSplash(ExtendedBaseModel):
     def __init__(self, app, vao_name='waterSplash', tex_id='water',

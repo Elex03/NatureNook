@@ -16,6 +16,8 @@ class VBO:
             'flower': ModelVBO(ctx, 'resources/models/source/pond.obj'),
             'radio': ModelVBO(ctx, 'resources/models/source/radio.obj'),
             'cabin': ModelVBO(ctx, 'resources/models/source/cabin.obj'),
+            'cupM': ModelVBO(ctx, 'resources/models/source/cupMushroom.obj'),
+            'bodyM': ModelVBO(ctx, 'resources/models/source/bodyMushroom.obj'),
             'deer': ModelVBO(ctx, 'resources/models/source/deer.obj'),
             'waterSplash': ModelVBO(ctx, 'resources/models/source/water_splash.obj'),
             'skybox': SkyBoxVBO(ctx),
