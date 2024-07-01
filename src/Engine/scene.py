@@ -8,6 +8,7 @@ import math
 
 class Scene:
     def __init__(self, app):
+        self.deer2 = None
         self.app = app
         self.objects = []
         self.index = 1  # Inicializa el índice de la animación
@@ -15,6 +16,7 @@ class Scene:
         self.index_Fox = 1
         self.index_Bird = 1
         self.index_deer = 1
+        self.index_deer2 = 50
         self.index_bee = 1
         self.old_lantern = None
         self.Rain = None
@@ -98,12 +100,13 @@ class Scene:
             self.Fox = Fox(app, pos=(0, 2, 0))
 
     def update(self, pos):
-        global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation
+        global Old_Lantern_class, Old_Lantern_class1, Fox_animation, Bird_animation, Deer_animation, Bee_animation, Deer_animation2
         self.index = self.index + 1 if (self.index + 1) < 25 else 1
         self.index2 = self.index2 + 1 if (self.index2 + 1) < 25 else 1
         self.index_Fox = self.index_Fox + 1 if (self.index_Fox + 1) < 15 else 1
         self.index_Bird = self.index_Bird + 1 if (self.index_Bird + 1) < 104 else 1
         self.index_deer = self.index_deer + 1 if (self.index_deer + 1) < 109 else 1
+        self.index_deer2 = self.index_deer2 + 1 if (self.index_deer2 + 1) < 109 else 1
         self.index_bee = self.index_bee + 1 if (self.index_bee + 1) < 240 else 1
         self.rain()
         if self.app.is_day:
@@ -112,6 +115,7 @@ class Scene:
             Fox_animation = globals()[f'Fox_{self.index_Fox}']
             Bird_animation = globals()[f'Bird_{self.index_Bird}']
             Deer_animation = globals()[f'deer_({self.index_deer})']
+            Deer_animation2 = globals()[f'deer_({self.index_deer2})']
             Bee_animation = globals()[f'Bee_({self.index_bee})']
 
         # Calcular la nueva posición alrededor de la cámara
@@ -137,6 +141,8 @@ class Scene:
                 self.remove_object(self.bird)
             if self.deer is not None:
                 self.remove_object(self.deer)
+            if self.deer2 is not None:
+                self.remove_object(self.deer2)
             if self.Bee is not None:
                 self.remove_object(self.Bee)
 
@@ -145,7 +151,8 @@ class Scene:
             self.second_lantern = Old_Lantern_class1(self.app, pos=self.app.position_lamp + glm.vec3(0.5, 0.2, 0.2),
                                                      tex_id='frame_2')
             self.bird = Bird_animation(self.app, pos=(-6.44, -0.9, 5.61), tex_id='bird', rot=(0, 90, 0))
-            self.deer = Deer_animation(self.app, pos=(-9, -1, -16), tex_id='deer', rot=(0, 45, 0))
+            self.deer = Deer_animation(self.app, pos=(12, -1, -16), tex_id='deer', rot=(0, 45, 0))
+            self.deer2 = Deer_animation2(self.app, pos=(15.5, -1, -16), tex_id='deer', rot=(0, 290, 0))
             self.Bee = Bee_animation(self.app, pos=(2, 0, 4), tex_id='bee')
             if self.app.bool_fox:
                 if self.app.position_fox[0] < 12.5:
@@ -175,6 +182,7 @@ class Scene:
             self.add_object(self.bird)
             self.add_object(self.Fox)
             self.add_object(self.deer)
+            self.add_object(self.deer2)
             self.add_object(self.Bee)
 
             self.old_lantern.render()
@@ -183,6 +191,7 @@ class Scene:
             self.bird.render()
             self.deer.render()
             self.Bee.render()
+            self.deer2.render()
         else:
             self.app.moving_lamp.pos = self.app.position_lamp
 
@@ -192,7 +201,7 @@ class Scene:
             SceneRenderer(self.app)
         else:
             radius = 50
-            time = self.app.time / 6 % (2 * math.pi)
+            time = self.app.time / 20 % (2 * math.pi)
 
             if time > math.pi:
                 time = 2 * math.pi - time

@@ -173,7 +173,7 @@ for i in range(1, 15):
 
     def create_class(vao_name):
         return type(class_name, (ExtendedBaseModel,), {
-            '__init__': lambda self, app, tex_id='Fox', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1):
+            '__init__': lambda self, app, tex_id='Fox', pos=(0, 0, 0), rot=(0, 0, 0), scale=(1.2, 1.2, 1.2):
                 ExtendedBaseModel.__init__(self, app, vao_name, tex_id, pos, rot, scale)
         })
 

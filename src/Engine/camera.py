@@ -60,9 +60,9 @@ class Camera:
         self.m_view = self.get_view_matrix()
 
     def move(self):
+        print(self.position)
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
-        print(self.position)
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
             distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
             if distance < 20:
