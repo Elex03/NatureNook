@@ -7,12 +7,11 @@ class Texture:
     def __init__(self, app):
         self.app = app
         self.ctx = app.ctx
-        self.textures = {}
-        self.textures[1] = self.get_texture(path='resources/textures/grand.jpg')
-        self.textures[0] = self.get_texture(path='resources/textures/grand.jpg')
-
-
-        self.textures['skybox'] = self.get_texture_cube(dir_path='resources/textures/skybox1/', ext='png')
+        self.textures = {1: self.get_texture(path='resources/textures/grand.jpg'),
+                         0: self.get_texture(path='resources/textures/grand.jpg')}
+        self.get_texture_skybox = app.scene_skybox[0] if app.is_day else app.scene_skybox[1]
+        print(self.get_texture_skybox)
+        self.textures['skybox'] = self.get_texture_cube(dir_path='resources/textures/'+self.get_texture_skybox+'/', ext='png')
         self.textures['depth_texture'] = self.get_depth_texture()
 
     def get_depth_texture(self):

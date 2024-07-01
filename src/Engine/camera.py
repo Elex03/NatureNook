@@ -1,17 +1,17 @@
 import glm
 
-
+from math import sqrt
 import pygame as pg
 
 FOV = 50  # deg
 NEAR = 0.1
 FAR = 100
-SPEED = 0.030
+SPEED = 0.010
 SENSITIVITY = 0.08
 
 
 class Camera:
-    def __init__(self, app, position=(0, 0, 4), yaw=-90, pitch=0):
+    def __init__(self, app, position=(0, 2, 0), yaw=-90, pitch=0):
         self.app = app
         self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
         self.position = glm.vec3(position)
@@ -25,6 +25,10 @@ class Camera:
         # projection matrix
         self.m_proj = self.get_projection_matrix()
         self.Limits = glm.vec2(20, -20)
+        self.Pos_Radio = glm.vec3(15, 2, 7)
+        # auxiliar
+        self.x = 0
+        self.z = 0
 
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
@@ -41,7 +45,6 @@ class Camera:
 
         self.forward = glm.normalize(self.forward)
         self.right = glm.normalize(glm.cross(self.forward, glm.vec3(0, 1, 0)))
-        self.up = glm.normalize(glm.cross(self.right, self.forward))
 
     def update(self):
         self.move()
@@ -53,35 +56,37 @@ class Camera:
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
-            print(self.position)
+            distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
+
+            if distance < 20:
+                volume = round(distance) / 20
+                # volume_normalized = abs(volume - 1)
+                # self.app.sound_music.set_volume(volume_normalized)
+                # print('Volume: ', self.app.sound_music.get_volume())
         if keys[pg.K_w]:
-            z = self.position[2] + self.forward[2] * velocity
-            x = self.position[0] + self.forward[0] * velocity
-            if self.Limits[0] > z > self.Limits[1] and self.Limits[0] > x > self.Limits[1]:
-                self.position[2] = z
-                self.position[0] = x
+            self.z = self.position[2] + self.forward[2] * velocity
+            self.x = self.position[0] + self.forward[0] * velocity
+            if self.Limits[0] > self.z > self.Limits[1] and self.Limits[0] > self.x > self.Limits[1]:
+                self.position[2] = self.z
+                self.position[0] = self.x
         if keys[pg.K_s]:
-            z = self.position[2] - self.forward[2] * velocity
-            x = self.position[0] - self.forward[0] * velocity
-            if self.Limits[1] < z < self.Limits[0] and self.Limits[1] < x < self.Limits[0]:
-                self.position[2] = z
-                self.position[0] = x
+            self.z = self.position[2] - self.forward[2] * velocity
+            self.x = self.position[0] - self.forward[0] * velocity
+            if self.Limits[1] < self.z < self.Limits[0] and self.Limits[1] < self.x < self.Limits[0]:
+                self.position[2] = self.z
+                self.position[0] = self.x
         if keys[pg.K_a]:
-            x = self.position[0] - self.right[0] * velocity
-            z = self.position[2] - self.right[2] * velocity
-            if self.Limits[1] < x < self.Limits[0] and self.Limits[1] < z < self.Limits[0]:
-                self.position[0] = x
-                self.position[2] = z
+            self.x = self.position[0] - self.right[0] * velocity
+            self.z = self.position[2] - self.right[2] * velocity
+            if self.Limits[1] < self.x < self.Limits[0] and self.Limits[1] < self.z < self.Limits[0]:
+                self.position[0] = self.x
+                self.position[2] = self.z
         if keys[pg.K_d]:
-            x = self.position[0] + self.right[0] * velocity
-            z = self.position[2] + self.right[2] * velocity
-            if self.Limits[0] > x > self.Limits[1] and self.Limits[0] > z > self.Limits[1]:
-                self.position[0] = x
-                self.position[2] = z
-        if keys[pg.K_q]:
-            self.position += self.up * velocity
-        if keys[pg.K_e]:
-            self.position -= self.up * velocity
+            self.x = self.position[0] + self.right[0] * velocity
+            self.z = self.position[2] + self.right[2] * velocity
+            if self.Limits[0] > self.x > self.Limits[1] and self.Limits[0] > self.z > self.Limits[1]:
+                self.position[0] = self.x
+                self.position[2] = self.z
 
     def get_view_matrix(self):
         return glm.lookAt(self.position, self.position + self.forward, self.up)
