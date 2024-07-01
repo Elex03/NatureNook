@@ -32,7 +32,7 @@ class Slider:
         # Draw the percentage text
         font = pg.font.SysFont("arialblack", 20)
         text_surface = font.render(f"{int(self.val)}%", True, (255, 255, 255))
-        surface.blit(text_surface, (self.rect.x + self.rect.w + 10, self.rect.y))
+        surface.blit(text_surface, (self.rect.x + self.rect.w + 13, self.rect.y - 5))
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:

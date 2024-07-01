@@ -1,31 +1,33 @@
 import pygame as pg
 import moderngl as mgl
+from threading import Thread
 from ImageLoader import ImageLoader
 from ButtonManager import ButtonManager
 from Menu import Menu
 from ButtonCreator import ButtonCreator
 from EventChecker import EventChecker
+import sys
+
 
 class GraphicEngine:
     def __init__(self, win_size=(800, 600)):
         pg.init()
         self.WIN_SIZE = win_size
-        pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
-        pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
-        pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
-        # create opengl context
-        pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE | pg.OPENGL | pg.DOUBLEBUF)
+        self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)  # Comenzar en modo menú
         self.ctx = None  # Inicializar el contexto de OpenGL como None
         self.clock = pg.time.Clock()
         self.game_paused = True  # Comenzar en modo pausa (menú)
+        self.pyqt_thread = None
 
         # Initialize ImageLoader
-        img_folder = r'finished/botton/'
+        img_folder = r'botton/'
         self.image_loader = ImageLoader(img_folder)
 
         # Initialize ButtonManager and create buttons
         self.button_manager = ButtonManager(self.image_loader)
+
         self.button_creator = ButtonCreator(self.button_manager)
+
         self.button_creator.create_buttons()
 
         # Initialize Menu
@@ -41,7 +43,10 @@ class GraphicEngine:
         self.overlay_surface = pg.Surface(self.WIN_SIZE, pg.SRCALPHA)
 
     def set_mode(self):
-        if not self.game_paused:
+        if self.game_paused:
+            self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.RESIZABLE)
+        else:
+            self.screen = pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
             if not self.ctx:
                 self.ctx = mgl.create_context()
 
@@ -51,9 +56,7 @@ class GraphicEngine:
             pg.display.flip()
         else:
             self.screen.fill((0, 0, 0))  # Clear the screen with black
-            # Add any other rendering logic here if necessary
             if not self.game_paused:
-                # Draw the game scene here
                 self.screen.fill((0, 0, 0))  # This would be your game rendering logic
 
     def run(self):
@@ -67,14 +70,15 @@ class GraphicEngine:
                 self.screen.blit(self.overlay_surface, (0, 0))
                 # Draw the menu on top
                 action = self.menu.draw_menu()
-                self.menu.adjust_volume_continuously()  # Continuously adjust volume
-                if action == "resume":
-                    self.game_paused = False
-                    self.set_mode()
+                self.menu.adjust_volume_continuously()  # Adjust volume continuously if needed
             else:
+                # Render the game scene
                 self.render()
+            pg.display.flip()
             self.clock.tick(60)
 
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     app = GraphicEngine()
     app.run()
