@@ -11,7 +11,7 @@ from src.Engine.finished.Main.scene_renderer import SceneRenderer
 pg.init()
 pg.mixer.init()
 
-print("hola")
+
 class GraphicsEngine:
     def __init__(self, win_size=(840, 480)):
         # window size
