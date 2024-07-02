@@ -60,7 +60,6 @@ class GraphicEngine:
     def run(self):
         while self.Run:
             self.event_checker.check_events()  # Use EventChecker to handle events
-            print(self.game_paused)
             if self.game_paused:
                 # Render the game scene
                 self.render()

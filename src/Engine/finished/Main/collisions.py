@@ -1,10 +1,11 @@
+
 class Collisions:
     def __init__(self, app):
         self.app = app
         self.limits = (0.5, 2, 4)
         self.position_rock = (100, 100)
 
-    def check_limits(self, position):
+    def check_limits(self, position, control):
         collisionFound = True
         length_positions = len(position)
 
@@ -22,6 +23,7 @@ class Collisions:
         if collisionFound and self.verify():
             return True
         else:
+            control.vibration()
             return False
 # finished
 

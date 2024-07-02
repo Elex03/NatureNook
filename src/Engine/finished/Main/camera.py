@@ -31,11 +31,10 @@ class Camera:
         # auxiliar
         self.x = 0
         self.z = 0
-        # control
-        self.control = Control(self)
         # coalitions
         self.collisions = Collisions(self)
-        self.sound = pg.mixer.Sound(self.app.soundWalk[0])
+        # self.sound = pg.mixer.Sound(self.app.soundWalk[0])
+        self.control = self.app.control
 
 
     def rotate(self):
@@ -64,43 +63,42 @@ class Camera:
         velocity = SPEED * self.app.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_a] or keys[pg.K_s] or keys[pg.K_d] or keys[pg.K_w]:
-            soundBool = self.collisions.verify_isHouse()
+            #soundBool = self.collisions.verify_isHouse()
             distance = sqrt((self.position[0] - self.Pos_Radio[0]) ** 2 + (self.position[2] - self.Pos_Radio[2]) ** 2)
             if distance < 5:
                 volume = round(distance) / 5
                 volume_normalized = abs(volume - 1)
                 self.app.RadioAurora.set_volume(volume_normalized)
-                print('Volume: ', self.app.RadioAurora.get_volume())
                 self.app.BackgroundSound.set_volume(0.5)
             else:
                 self.app.BackgroundSound.set_volume(1)
-        else:
-            self.sound.fadeout(500)
+        #else:
+            #self.sound.fadeout(500)
         if keys[pg.K_w]:
             self.z = self.position[2] + self.forward[2] * velocity
             self.x = self.position[0] + self.forward[0] * velocity
-            bool_collisions = self.collisions.check_limits(self.app.Position)
+            bool_collisions = self.collisions.check_limits(self.app.Position, self.control)
             if self.Limits[0] > self.z > self.Limits[1] and self.Limits[0] > self.x > self.Limits[1] and bool_collisions:
                 self.position[2] = self.z
                 self.position[0] = self.x
         if keys[pg.K_s]:
             self.z = self.position[2] - self.forward[2] * velocity
             self.x = self.position[0] - self.forward[0] * velocity
-            bool_collisions = self.collisions.check_limits(self.app.Position)
+            bool_collisions = self.collisions.check_limits(self.app.Position,self.control)
             if self.Limits[1] < self.z < self.Limits[0] and self.Limits[1] < self.x < self.Limits[0] and bool_collisions:
                 self.position[2] = self.z
                 self.position[0] = self.x
         if keys[pg.K_a]:
             self.x = self.position[0] - self.right[0] * velocity
             self.z = self.position[2] - self.right[2] * velocity
-            bool_collisions = self.collisions.check_limits(self.app.Position)
+            bool_collisions = self.collisions.check_limits(self.app.Position,self.control)
             if self.Limits[1] < self.x < self.Limits[0] and self.Limits[1] < self.z < self.Limits[0] and bool_collisions:
                 self.position[0] = self.x
                 self.position[2] = self.z
         if keys[pg.K_d]:
             self.x = self.position[0] + self.right[0] * velocity
             self.z = self.position[2] + self.right[2] * velocity
-            bool_collisions = self.collisions.check_limits(self.app.Position)
+            bool_collisions = self.collisions.check_limits(self.app.Position, self.control)
             if self.Limits[0] > self.x > self.Limits[1] and self.Limits[0] > self.z > self.Limits[1] and bool_collisions:
                 self.position[0] = self.x
                 self.position[2] = self.z

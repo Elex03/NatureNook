@@ -7,6 +7,7 @@ from src.Engine.finished.Main.light import Light
 from src.Engine.finished.Main.mesh import Mesh
 from src.Engine.finished.Main.scene import Scene
 from src.Engine.finished.Main.scene_renderer import SceneRenderer
+from src.Engine.finished.Main.control import Control
 
 pg.init()
 pg.mixer.init()
@@ -37,6 +38,7 @@ class GraphicsEngine:
         self.ctx.front_face = 'ccw'  # 'ccw' means counter-clockwise, which is the default
         self.ctx.cull_face = 'back'  # Cull back faces (default)
         # create an object to help track time
+        self.control = Control()
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
