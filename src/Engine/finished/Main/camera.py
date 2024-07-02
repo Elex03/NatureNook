@@ -26,7 +26,7 @@ class Camera:
         self.m_view = self.get_view_matrix()
         # projection matrix
         self.m_proj = self.get_projection_matrix()
-        self.Limits = glm.vec2(100, -100)
+        self.Limits = glm.vec2(30, -30)
         self.Pos_Radio = glm.vec3(-1.71, 1.2, 1.08)
         # auxiliar
         self.x = 0
