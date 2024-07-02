@@ -73,3 +73,41 @@ class Collisions:
             return False
         else:
             return True
+
+    def verify_isHouse(self):
+        vertices = ([
+
+            [3.9, 5.83],
+            [-3.11, 5.93],
+            [-3.11, -3.90],
+            [4.24, -4.04]
+
+
+        ])
+
+        # Definir el punto a verificar
+        P = ([self.app.x, self.app.z])
+
+        # Función para verificar si un punto está dentro de un polígono
+        def is_point_in_polygon(point, vertices):
+            n = len(vertices)
+            inside = False
+            x, z = point
+            p1x, p1z = vertices[0]
+            for i in range(n + 1):
+                p2x, p2z = vertices[i % n]
+                if z > min(p1z, p2z):
+                    if z <= max(p1z, p2z):
+                        if x <= max(p1x, p2x):
+                            if p1z != p2z:
+                                xinters = (z - p1z) * (p2x - p1x) / (p2z - p1z) + p1x
+                            if p1x == p2x or x <= xinters:
+                                inside = not inside
+                p1x, p1z = p2x, p2z
+            return inside
+
+        # Verificar si el punto está dentro del hexágono en el plano 'xz'
+        if is_point_in_polygon(P, vertices):
+            return False
+        else:
+            return True
