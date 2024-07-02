@@ -65,6 +65,9 @@ class Menu:
             self.app.Run = False
             self.app.game_pause = True
             app = GraphicsEngine()
+            app.BackgroundSound.play(-1)
+            app.RadioAurora.play(-1)
+            app.RadioAurora.set_volume(0)
             app.run()
         elif selected_button == "options":
             self.open_new_window()  # Llama a la función para mostrar la pantalla de créditos
