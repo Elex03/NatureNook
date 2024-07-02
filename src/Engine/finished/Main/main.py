@@ -41,6 +41,7 @@ class GraphicsEngine:
         self.time = 0
         self.delta_time = 0
         # color of the light
+        self.soundWalk = ['finished/Main/resources/sounds/walking-on-a-gravel-169409','finished/Main/resources/sounds/walking-on-wooden-floor-94493']
         self.color = [(1, 1, 1), (0.145, 0.157, 0.314), (0.961, 0.588, 0.133)]
         # camera
         self.is_day = True
