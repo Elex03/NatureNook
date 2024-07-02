@@ -35,6 +35,7 @@ class Camera:
         self.control = Control(self)
         # coalitions
         self.collisions = Collisions(self)
+        self.sound = pg.mixer.Sound(self.app.soundWalk[0])
 
 
     def rotate(self):
@@ -73,6 +74,8 @@ class Camera:
                 self.app.BackgroundSound.set_volume(0.5)
             else:
                 self.app.BackgroundSound.set_volume(1)
+        else:
+            self.sound.fadeout(500)
         if keys[pg.K_w]:
             self.z = self.position[2] + self.forward[2] * velocity
             self.x = self.position[0] + self.forward[0] * velocity
