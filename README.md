@@ -27,6 +27,3 @@ To install the dependencies in the console you must put this
 ## Authors
 
 - [@Eliezer Acuña](https://www.github.com/Elex03)
-- [@Benjamin Salguera](https://www.github.com/Salguera)
-- [@Halley Rugama](https://www.github.com/HalleyR09)
-- [@Ana Ordoñez](https://www.github.com/sofi)
